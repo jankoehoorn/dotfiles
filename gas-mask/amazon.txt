@@ -1,0 +1,52 @@
+##
+# Host Database
+#
+# localhost is used to configure the loopback interface
+# when the system is booting.  Do not change this entry.
+##
+127.0.0.1           localhost
+255.255.255.255     broadcasthost
+::1                     localhost
+fe80::1%lo0         localhost
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+# DEVELOP ENVIRONMENT
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+127.0.0.1           css.develop.triplep-parenting.net
+127.0.0.1           develop.positiefopvoeden.nl
+127.0.0.1           develop.triplep-annebabalik.net
+127.0.0.1           develop.triplep-nederland.nl
+127.0.0.1           develop.triplep-parenting.net
+127.0.0.1           develop.triplep-parenting.net.au
+127.0.0.1           develop.triplep-parenting.uk.net
+127.0.0.1           develop.triplep-paternidad.net
+127.0.0.1           develop.triplep-steppingstones.net
+127.0.0.1           develop.triplep-usag.net
+127.0.0.1           develop.triplep.net
+127.0.0.1           develop.workflow.net
+127.0.0.1           images.develop.triplep-parenting.net
+127.0.0.1           js.develop.triplep-parenting.net
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+# STAGING ENVIRONMENT
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+52.1.113.74         staging.triplep-parenting.net
+52.1.113.74         staging.triplep-steppingstones.net
+52.1.113.74         staging.triplep.net
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+# PRODUCTION ENVIRONMENT
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+52.1.113.74         www.positiefopvoeden.nl
+52.1.113.74         www.positive-parenting.net
+52.1.113.74         www.triplep-annebabalik.net
+52.1.113.74         www.triplep-parenting.net
+52.1.113.74         www.triplep-parenting.net.au
+52.1.113.74         www.triplep-parenting.uk.net
+52.1.113.74         www.triplep-paternidad.net
+52.1.113.74         www.triplep-staypositive.net
+52.1.113.74         www.triplep-staypositive.nl
+52.1.113.74         www.triplep-steppingstones.net
+52.1.113.74         www.triplep-usag.net
+52.1.113.74         www.triplep.cl
+52.1.113.74         www.triplep.net
