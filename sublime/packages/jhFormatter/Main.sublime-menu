@@ -1,0 +1,13 @@
+[
+    {
+        "id": "file",
+        "children":
+        [
+            {
+                "id" : "jhformatter",
+                "caption" : "JH Formatter",
+                "command" : "jh_formatter"
+            }
+        ]
+    }
+]
