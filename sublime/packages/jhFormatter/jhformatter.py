@@ -10,6 +10,7 @@ class JhFormatterCommand ( sublime_plugin.TextCommand ):
         # str_out = JhFormatterCommand.remove_whitespace ( str_in )
         # str_out = JhFormatterCommand.add_newlines ( str_out )
         str_out = JhFormatterCommand.space_parens ( str_in )
+        str_out = JhFormatterCommand.capitalize_keywords( str_out )
 
         self.view.erase ( edit, region )
         self.view.insert ( edit, 0, str_out )
@@ -38,3 +39,10 @@ class JhFormatterCommand ( sublime_plugin.TextCommand ):
         str_out = re.sub ( regex, ' ', str_out )
 
         return str_out
+
+    def capitalize_keywords ( str_in ):
+        str_out = str_in.replace ( 'namespace', 'Namespace' )
+        str_out = str_out.replace ( 'interface', 'Interface' )
+        str_out = str_out.replace ( 'class', 'Class' )
+
+        return str_out;
