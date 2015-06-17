@@ -1,0 +1,12 @@
+/concrete
+/css
+/geoip2
+/helpers
+/images
+/js
+
+/blocks/**
+/packages/**
+
+/files/cache/**
+/files/tmp/**
