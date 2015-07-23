@@ -1551,7 +1551,7 @@ AddType application/octet-stream .xlsx
 	##############################################################################
 	# START 301 SECTION TRIPLEP-PARENTING PS V2
 	##############################################################################
-	# parentsite files
+	# PARENTSITE FILES
 	RewriteCond %{HTTP_HOST} ^develop.positiefopvoeden.nl$ [OR]
 	RewriteCond %{HTTP_HOST} ^develop.triplep-eltern.de$ [OR]
 	RewriteCond %{HTTP_HOST} ^develop.triplep-parenting.net$ [OR]
@@ -1582,7 +1582,7 @@ AddType application/octet-stream .xlsx
 	RewriteCond %{REQUEST_URI} ^/css
 	RewriteRule ^(.*)$ /parentsite/$1 [QSA,L]
 
-	# parentsite urls
+	# PARENTSITE URLS
 	RewriteCond %{HTTP_HOST} ^develop.positiefopvoeden.nl$ [OR]
 	RewriteCond %{HTTP_HOST} ^develop.triplep-eltern.de$ [OR]
 	RewriteCond %{HTTP_HOST} ^develop.triplep-parenting.net$ [OR]
