@@ -1546,6 +1546,20 @@ AddType application/octet-stream .xlsx
 	RewriteCond %{REQUEST_FILENAME}/index.php !-f
 	RewriteRule ^(.*)$ index.php/$1 [L]
 
+	##############################################################################
+	# START 301 SECTION TRIPLEP-PARENTING PS V2
+	##############################################################################
+	# TLD FILES
+	RewriteCond %{HTTP_HOST} ^develop.triplep-parenting.tld$ [NC]
+	RewriteCond %{REQUEST_URI} ^/concrete [OR]
+	RewriteCond %{REQUEST_URI} ^/themes [OR]
+	RewriteCond %{REQUEST_URI} ^/packages [OR]
+	RewriteCond %{REQUEST_URI} ^/files [OR]
+	RewriteCond %{REQUEST_URI} ^/updates [OR]
+	RewriteCond %{REQUEST_URI} ^/images [OR]
+	RewriteCond %{REQUEST_URI} ^/js [OR]
+	RewriteCond %{REQUEST_URI} ^/css
+	RewriteRule ^(.*)$ /tld/$1 [QSA,L]
 
 
 	##############################################################################
@@ -1586,6 +1600,7 @@ AddType application/octet-stream .xlsx
 	RewriteCond %{HTTP_HOST} ^develop.positiefopvoeden.nl$ [OR]
 	RewriteCond %{HTTP_HOST} ^develop.triplep-eltern.de$ [OR]
 	RewriteCond %{HTTP_HOST} ^develop.triplep-parenting.net$ [OR]
+	RewriteCond %{HTTP_HOST} ^develop.triplep-parenting.tld$ [OR]
 	RewriteCond %{HTTP_HOST} ^develop.triplep-parenting.net.au$ [OR]
 	RewriteCond %{HTTP_HOST} ^develop.triplep-parenting.uk.net$ [OR]
 	RewriteCond %{HTTP_HOST} ^develop.triplep-paternidad.net$ [OR]
