@@ -1549,7 +1549,7 @@ AddType application/octet-stream .xlsx
 	##############################################################################
 	# START 301 SECTION TRIPLEP-PARENTING PS V2
 	##############################################################################
-	# TLD FILES
+	# PARENTSITE 3 FILES
 	RewriteCond %{HTTP_HOST} ^develop.triplep-parenting.tld$ [NC]
 	RewriteCond %{REQUEST_URI} ^/concrete [OR]
 	RewriteCond %{REQUEST_URI} ^/themes [OR]
@@ -1559,7 +1559,7 @@ AddType application/octet-stream .xlsx
 	RewriteCond %{REQUEST_URI} ^/images [OR]
 	RewriteCond %{REQUEST_URI} ^/js [OR]
 	RewriteCond %{REQUEST_URI} ^/css
-	RewriteRule ^(.*)$ /tld/$1 [QSA,L]
+	RewriteRule ^(.*)$ /parentsite3/$1 [QSA,L]
 
 
 	##############################################################################
