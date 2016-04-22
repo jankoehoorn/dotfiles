@@ -1,842 +1,1641 @@
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    #
-    #               Apache/PHP/Drupal settings
-    #
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+#
+# Apache/PHP/Drupal settings:
+#
 
-    # Protect files and directories from prying eyes.
+# Protect files and directories from prying eyes.
 <FilesMatch "\.(engine|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\.php)?|xtmpl|svn-base)$|^(code-style\.pl|Entries.*|Repository|Root|Tag|Template|all-wcprops|entries|format)$">
-    Order allow,deny
+	Order allow,deny
 </FilesMatch>
 
-    # Don't show directory listings for URLs which map to a directory.
-    Options -Indexes
+# Don't show directory listings for URLs which map to a directory.
+Options -Indexes
 
-    # Follow symbolic links in this directory.
-    Options +FollowSymLinks
+# Follow symbolic links in this directory.
+Options +FollowSymLinks
 
-    # Make Drupal handle any 404 errors.
-    ErrorDocument 401 default
-    ErrorDocument 402 default
-    ErrorDocument 403 default
-    ErrorDocument 404 default
+# Make Drupal handle any 404 errors.
+ErrorDocument 404 /index.php
 
-    # Force simple error message for requests for non-existent favicon.ico.
+# Force simple error message for requests for non-existent favicon.ico.
 <Files favicon.ico>
-    # There is no end quote below, for compatibility with Apache 1.3.
-    ErrorDocument 404 "The requested file favicon.ico was not found."
+	# There is no end quote below, for compatibility with Apache 1.3.
+	ErrorDocument 404 "The requested file favicon.ico was not found."
 </Files>
 
-    # Set the default handler.
-    DirectoryIndex index.php
+# Set the default handler.
+DirectoryIndex index.php
 
-    # Force the following filetypes to always offer download dialogs
-    AddType application/octet-stream .pdf
-    AddType application/octet-stream .doc
-    AddType application/octet-stream .docx
-    AddType application/octet-stream .xls
-    AddType application/octet-stream .xlsx
+# Force the following filetypes to always offer download dialogs
+AddType application/octet-stream .pdf
+AddType application/octet-stream .doc
+AddType application/octet-stream .docx
+AddType application/octet-stream .xls
+AddType application/octet-stream .xlsx
 
+# Override PHP settings. More in sites/default/settings.php
+# but the following cannot be changed at runtime.
 
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    # Override PHP settings. More in sites/default/settings.php
-    # but the following cannot be changed at runtime.
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    # PHP 4, Apache 1.
-    <IfModule mod_php4.c>
-        php_value magic_quotes_gpc                0
-        php_value register_globals                0
-        php_value session.auto_start              0
-        php_value mbstring.http_input             pass
-        php_value mbstring.http_output            pass
-        php_value mbstring.encoding_translation   0
-    </IfModule>
-
-    # PHP 4, Apache 2.
-    <IfModule sapi_apache2.c>
-        php_value magic_quotes_gpc                0
-        php_value register_globals                0
-        php_value session.auto_start              0
-        php_value mbstring.http_input             pass
-        php_value mbstring.http_output            pass
-        php_value mbstring.encoding_translation   0
-    </IfModule>
-
-    # PHP 5, Apache 1 and 2.
-    <IfModule mod_php5.c>
-        php_value magic_quotes_gpc                0
-        php_value register_globals                0
-        php_value session.auto_start              0
-        php_value mbstring.http_input             pass
-        php_value mbstring.http_output            pass
-        php_value mbstring.encoding_translation   0
-        php_value upload_max_filesize 24M
-        php_value post_max_size 24M
-    </IfModule>
-
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    #
-    #               BEGIN SETTINGS FILE CACHING PER TYPE
-    #
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-
-    <IfModule mod_expires.c>
-        ExpiresActive on
-        ExpiresDefault "access plus 1 month"
-
-    # CSS
-        ExpiresByType text/css "access plus 1 year"
-
-    # Favicon (cannot be renamed!) and cursor images
-        ExpiresByType image/vnd.microsoft.icon "access plus 1 week"
-        ExpiresByType image/x-icon "access plus 1 week"
-
-    # HTML
-        ExpiresByType text/html "access plus 0 seconds"
-
-    # JavaScript
-        ExpiresByType application/javascript "access plus 1 year"
-        ExpiresByType application/x-javascript "access plus 1 year"
-        ExpiresByType text/javascript "access plus 1 year"
-
-    # Media files
-        ExpiresByType audio/ogg "access plus 1 month"
-        ExpiresByType image/bmp "access plus 1 month"
-        ExpiresByType image/gif "access plus 1 month"
-        ExpiresByType image/jpeg "access plus 1 month"
-        ExpiresByType image/png "access plus 1 month"
-        ExpiresByType image/svg+xml "access plus 1 month"
-        ExpiresByType image/webp "access plus 1 month"
-        ExpiresByType video/mp4 "access plus 1 month"
-        ExpiresByType video/ogg "access plus 1 month"
-        ExpiresByType video/webm "access plus 1 month"
-
-    # Web fonts
-    # Embedded OpenType (EOT)
-        ExpiresByType application/vnd.ms-fontobject "access plus 1 month"
-        ExpiresByType font/eot "access plus 1 month"
-
-    # OpenType
-        ExpiresByType font/opentype "access plus 1 month"
-
-    # TrueType
-        ExpiresByType application/x-font-ttf "access plus 1 month"
-
-    # Web Open Font Format (WOFF) 1.0
-        ExpiresByType application/font-woff "access plus 1 month"
-        ExpiresByType application/x-font-woff "access plus 1 month"
-        ExpiresByType font/woff "access plus 1 month"
-
-    # Web Open Font Format (WOFF) 2.0
-        ExpiresByType application/font-woff2 "access plus 1 month"
-
-    # Other
-        ExpiresByType text/x-cross-domain-policy "access plus 1 week"
+# PHP 4, Apache 1.
+<IfModule mod_php4.c>
+	php_value magic_quotes_gpc                0
+	php_value register_globals                0
+	php_value session.auto_start              0
+	php_value mbstring.http_input             pass
+	php_value mbstring.http_output            pass
+	php_value mbstring.encoding_translation   0
 </IfModule>
 
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    #
-    #               BEGIN SETTINGS REWRITE RULES
-    #
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+# PHP 4, Apache 2.
+<IfModule sapi_apache2.c>
+	php_value magic_quotes_gpc                0
+	php_value register_globals                0
+	php_value session.auto_start              0
+	php_value mbstring.http_input             pass
+	php_value mbstring.http_output            pass
+	php_value mbstring.encoding_translation   0
+</IfModule>
 
+# PHP 5, Apache 1 and 2.
+<IfModule mod_php5.c>
+	php_value magic_quotes_gpc                0
+	php_value register_globals                0
+	php_value session.auto_start              0
+	php_value mbstring.http_input             pass
+	php_value mbstring.http_output            pass
+	php_value mbstring.encoding_translation   0
+		php_value upload_max_filesize 24M
+	php_value post_max_size 24M
+</IfModule>
+
+###########################################################################
+#               BEGIN SETTINGS FOR FILE CACHING PER TYPE                  #
+###########################################################################
+
+<IfModule mod_expires.c>
+		ExpiresActive on
+		ExpiresDefault "access plus 1 month"
+
+		# CSS
+		ExpiresByType text/css "access plus 1 year"
+
+		# Favicon (cannot be renamed!) and cursor images
+		ExpiresByType image/vnd.microsoft.icon "access plus 1 week"
+		ExpiresByType image/x-icon "access plus 1 week"
+
+		# HTML
+		ExpiresByType text/html "access plus 0 seconds"
+
+		# JavaScript
+		ExpiresByType application/javascript "access plus 1 year"
+		ExpiresByType application/x-javascript "access plus 1 year"
+		ExpiresByType text/javascript "access plus 1 year"
+
+		# Media files
+		ExpiresByType audio/ogg "access plus 1 month"
+		ExpiresByType image/bmp "access plus 1 month"
+		ExpiresByType image/gif "access plus 1 month"
+		ExpiresByType image/jpeg "access plus 1 month"
+		ExpiresByType image/png "access plus 1 month"
+		ExpiresByType image/svg+xml "access plus 1 month"
+		ExpiresByType image/webp "access plus 1 month"
+		ExpiresByType video/mp4 "access plus 1 month"
+		ExpiresByType video/ogg "access plus 1 month"
+		ExpiresByType video/webm "access plus 1 month"
+
+		# Web fonts
+		# Embedded OpenType (EOT)
+		ExpiresByType application/vnd.ms-fontobject "access plus 1 month"
+		ExpiresByType font/eot "access plus 1 month"
+		# OpenType
+		ExpiresByType font/opentype "access plus 1 month"
+		# TrueType
+		ExpiresByType application/x-font-ttf "access plus 1 month"
+		# Web Open Font Format (WOFF) 1.0
+		ExpiresByType application/font-woff "access plus 1 month"
+		ExpiresByType application/x-font-woff "access plus 1 month"
+		ExpiresByType font/woff "access plus 1 month"
+		# Web Open Font Format (WOFF) 2.0
+		ExpiresByType application/font-woff2 "access plus 1 month"
+		# Other
+		ExpiresByType text/x-cross-domain-policy "access plus 1 week"
+</IfModule>
+
+###########################################################################
+#               END SETTINGS FOR FILE CACHING PER TYPE                    #
+###########################################################################
+
+
+
+# Various rewrite rules.
 <IfModule mod_rewrite.c>
-    RewriteEngine on
+	RewriteEngine on
+
+	# If your site can be accessed both with and without the 'www.' prefix, you
+	# can use one of the following settings to redirect users to your preferred
+	# URL, either WITH or WITHOUT the 'www.' prefix. Choose ONLY one option:
+	#
+	# To redirect all users to access the site WITH the 'www.' prefix,
+	# (http://example.com/... will be redirected to http://www.example.com/...)
+	# adapt and uncomment the following:
+	# RewriteCond %{HTTP_HOST} ^example\.com$ [NC]
+	# RewriteRule ^(.*)$ http://www.example.com/$1 [L,R=301]
+	#
+	# To redirect all users to access the site WITHOUT the 'www.' prefix,
+	# (http://www.example.com/... will be redirected to http://example.com/...)
+	# uncomment and adapt the following:
+	# RewriteCond %{HTTP_HOST} ^www\.example\.com$ [NC]
+	# RewriteRule ^(.*)$ http://example.com/$1 [L,R=301]
+
+	# Modify the RewriteBase if you are using Drupal in a subdirectory or in a
+	# VirtualDocumentRoot and the rewrite rules are not working properly.
+	# For example if your site is at http://example.com/drupal uncomment and
+	# modify the following line:
+	# RewriteBase /drupal
+	#
+	# If your site is running in a VirtualDocumentRoot at http://example.com/,
+	# uncomment the following line:
+	# RewriteBase /
+
+	#############################################################################
+	# START 301 SECTION to FORCE ADDED TRAILING SLASH TO URL'S, EXCEPT REQUEST METHOD == POST
+	#############################################################################
+	RewriteCond %{REQUEST_URI} /+[^\.]+$ [NC]
+	RewriteCond %{REQUEST_METHOD} !=POST
+	RewriteRule ^(.+[^/])$ %{REQUEST_URI}/ [R=301,L]
+
+	############################################################################
+	# START 301 SECTION to redirect removed or renamed pages
+	############################################################################
+
+	RewriteCond %{HTTP_HOST} ^www\.triplep-parenting\.net [NC]
+	RewriteCond %{REQUEST_URI} ^/glo-en/get-help/which-triple-p-is-right-for-me/triple-p-online/
+	RewriteRule ^(.*)$ http://www\.triplep-parenting\.net/glo-en/get-help/which-triple-p-is-right-for-me/triple-p-online-your-personal-parenting-program-247/ [R=301,L]
+
+
+
+	############################################################################
+	# START 301 SECTION to redirect sitemap location
+	############################################################################
+	RewriteCond %{HTTP_HOST} ^www\.triplep-parenting\.net [NC]
+	RewriteCond %{REQUEST_URI} ^/glo-en/sitemaps/sitemap_glo_en.xml
+	RewriteRule ^(.*)$ http://www\.triplep-parenting\.net/parentsite/sitemaps/sitemap_glo_en.xml [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^www\.triplep-parenting\.net [NC]
+	RewriteCond %{REQUEST_URI} ^/son-en/sitemaps/sitemap_son_en.xml
+	RewriteRule ^(.*)$ http://www\.triplep-parenting\.net/parentsite/sitemaps/sitemap_son_en.xml [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^www\.triplep-parenting\.net [NC]
+	RewriteCond %{REQUEST_URI} ^/nc-en/sitemaps/sitemap_nc_en.xml
+	RewriteRule ^(.*)$ http://www\.triplep-parenting\.net/parentsite/sitemaps/sitemap_nc_en.xml [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^www\.triplep-parenting\.net [NC]
+	RewriteCond %{REQUEST_URI} ^/alb-en/sitemaps/sitemap_alb_en.xml
+	RewriteRule ^(.*)$ http://www\.triplep-parenting\.net/parentsite/sitemaps/sitemap_alb_en.xml [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^www\.triplep-parenting\.net [NC]
+	RewriteCond %{REQUEST_URI} ^/ska-en/sitemaps/sitemap_ska_en.xml
+	RewriteRule ^(.*)$ http://www\.triplep-parenting\.net/parentsite/sitemaps/sitemap_ska_en.xml [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^www\.triplep-parenting\.net [NC]
+	RewriteCond %{REQUEST_URI} ^/lwlo-uken/sitemaps/sitemap_lwlo_uken.xml
+	RewriteRule ^(.*)$ http://www\.triplep-parenting\.net/parentsite/sitemaps/sitemap_lwlo_uken.xml [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^www\.triplep-parenting\.net [NC]
+	RewriteCond %{REQUEST_URI} ^/nz-uken/sitemaps/sitemap_nz_uken.xml
+	RewriteRule ^(.*)$ http://www\.triplep-parenting\.net/parentsite/sitemaps/sitemap_nz_uken.xml [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^www\.triplep-parenting\.uk\.net [NC]
+	RewriteCond %{REQUEST_URI} ^/uk-en/sitemaps/sitemap_uk_en.xml
+	RewriteRule ^(.*)$ http://www\.triplep-parenting\.net/parentsite/sitemaps/sitemap_uk_en.xml [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^www\.triplep-parenting\.net\.au [NC]
+	RewriteCond %{REQUEST_URI} ^/au-uken/sitemaps/sitemap_au_uken.xml
+	RewriteRule ^(.*)$ http://www\.triplep-parenting\.net/parentsite/sitemaps/sitemap_au_uken.xml [R=301,L]
+
+
+	## www.triplep-paternidad.net
+	RewriteCond %{HTTP_HOST} ^www\.triplep-paternidad\.net [NC]
+	RewriteCond %{REQUEST_URI} ^/nc-uses/sitemaps/sitemap_nc_uses.xml
+	RewriteRule ^(.*)$ http://www\.triplep-paternidad\.net/parentsite/sitemaps/sitemap_nc_uses.xml [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^www\.triplep-paternidad\.net [NC]
+	RewriteCond %{REQUEST_URI} ^/son-es/sitemaps/sitemap_son_es.xml
+	RewriteRule ^(.*)$ http://www\.triplep-paternidad\.net/parentsite/sitemaps/sitemap_son_es.xml [R=301,L]
+
+
+	## www.triplep-annebabalik.net
+	RewriteCond %{HTTP_HOST} ^www\.triplep-annebabalik\.net [NC]
+	RewriteCond %{REQUEST_URI} ^/bal-tr/sitemaps/sitemap_bal_tr.xml
+	RewriteRule ^(.*)$ http://www\.triplep-annebabalik\.net/parentsite/sitemaps/sitemap_bal_tr.xml [R=301,L]
+
+
+	## www.positiefopvoeden.nl
+	RewriteCond %{HTTP_HOST} ^www\.positiefopvoeden\.nl [NC]
+	RewriteCond %{REQUEST_URI} ^/nl-nl/sitemaps/sitemap_nl_nl.xml
+	RewriteRule ^(.*)$ http://www\.positiefopvoeden\.nl/parentsite/sitemaps/sitemap_nl_nl.xml [R=301,L]
 
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    # START 301 SECTION to FORCE ADDED TRAILING SLASH TO URL'S, EXCEPT REQUEST METHOD == POST
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    RewriteCond %{REQUEST_URI} /+[^\.]+$ [NC]
-    RewriteCond %{REQUEST_METHOD} !=POST
-    RewriteRule ^(.+[^/])$ %{REQUEST_URI}/ [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.positiefopvoeden\.nl [NC]
+	RewriteCond %{REQUEST_URI} ^/ams-nl/sitemaps/sitemap_ams_nl.xml
+	RewriteRule ^(.*)$ http://www\.positiefopvoeden\.nl/parentsite/sitemaps/sitemap_ams_nl.xml [R=301,L]
 
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    # START 301 SECTION > 2014-04-22: FORCE 'WWW' PREFIX
-    # 20150911JB NOTE: SECTION WAS MISSING AND BEEN RESTORED
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    RewriteCond %{HTTP_HOST} ^positiefopvoeden.nl$
-    RewriteRule ^(.*)$ http://www.positiefopvoeden.nl/$1 [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.positiefopvoeden\.nl [NC]
+	RewriteCond %{REQUEST_URI} ^/nh-nl/sitemaps/sitemap_nh_nl.xml
+	RewriteRule ^(.*)$ http://www\.positiefopvoeden\.nl/parentsite/sitemaps/sitemap_nh_nl.xml [R=301,L]
 
-    RewriteCond %{HTTP_HOST} ^triplep-parenting.net$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/$1 [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.positiefopvoeden\.nl [NC]
+	RewriteCond %{REQUEST_URI} ^/fr-nl/sitemaps/sitemap_fr_nl.xml
+	RewriteRule ^(.*)$ http://www\.positiefopvoeden\.nl/parentsite/sitemaps/sitemap_fr_nl.xml [R=301,L]
 
-    RewriteCond %{HTTP_HOST} ^triplep-parenting.uk.net$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.uk.net/$1 [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.positiefopvoeden\.nl [NC]
+	RewriteCond %{REQUEST_URI} ^/gr-nl/sitemaps/sitemap_gr_nl.xml
+	RewriteRule ^(.*)$ http://www\.positiefopvoeden\.nl/parentsite/sitemaps/sitemap_gr_nl.xml [R=301,L]
 
-    RewriteCond %{HTTP_HOST} ^triplep-parenting.net.au$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net.au/$1 [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.positiefopvoeden\.nl [NC]
+	RewriteCond %{REQUEST_URI} ^/ov-nl/sitemaps/sitemap_ov_nl.xml
+	RewriteRule ^(.*)$ http://www\.positiefopvoeden\.nl/parentsite/sitemaps/sitemap_ov_nl.xml [R=301,L]
 
-    RewriteCond %{HTTP_HOST} ^triplep-paternidad.net$
-    RewriteRule ^(.*)$ http://www.triplep-paternidad.net/$1 [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.positiefopvoeden\.nl [NC]
+	RewriteCond %{REQUEST_URI} ^/ge-nl/sitemaps/sitemap_ge_nl.xml
+	RewriteRule ^(.*)$ http://www\.positiefopvoeden\.nl/parentsite/sitemaps/sitemap_ge_nl.xml [R=301,L]
 
-    RewriteCond %{HTTP_HOST} ^triplep-annebabalik.net$
-    RewriteRule ^(.*)$ http://www.triplep-annebabalik.net/$1 [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.positiefopvoeden\.nl [NC]
+	RewriteCond %{REQUEST_URI} ^/nb-nl/sitemaps/sitemap_nb_nl.xml
+	RewriteRule ^(.*)$ http://www\.positiefopvoeden\.nl/parentsite/sitemaps/sitemap_nb_nl.xml [R=301,L]
 
-    RewriteCond %{HTTP_HOST} ^parentinghelpnow.com$
-    RewriteRule ^(.*)$ http://www.parentinghelpnow.com/$1 [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.positiefopvoeden\.nl [NC]
+	RewriteCond %{REQUEST_URI} ^/li-nl/sitemaps/sitemap_li_nl.xml
+	RewriteRule ^(.*)$ http://www\.positiefopvoeden\.nl/parentsite/sitemaps/sitemap_li_nl.xml [R=301,L]
 
-    RewriteCond %{HTTP_HOST} ^provenparenting.net$
-    RewriteRule ^(.*)$ http://www.provenparenting.net/$1 [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.positiefopvoeden\.nl [NC]
+	RewriteCond %{REQUEST_URI} ^/ut-nl/sitemaps/sitemap_ut_nl.xml
+	RewriteRule ^(.*)$ http://www\.positiefopvoeden\.nl/parentsite/sitemaps/sitemap_ut_nl.xml [R=301,L]
 
-    RewriteCond %{HTTP_HOST} ^provenparenting.us$
-    RewriteRule ^(.*)$ http://www.provenparenting.us/$1 [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.positiefopvoeden\.nl [NC]
+	RewriteCond %{REQUEST_URI} ^/zh-nl/sitemaps/sitemap_zh_nl.xml
+	RewriteRule ^(.*)$ http://www\.positiefopvoeden\.nl/parentsite/sitemaps/sitemap_zh_nl.xml [R=301,L]
 
-    RewriteCond %{HTTP_HOST} ^triplep\.cl$ [OR]
-    RewriteCond %{HTTP_HOST} ^chile.triplep-staypositive.net$
-    RewriteRule ^(.*)$ http://www.triplep.cl/$1 [L,R=301]
+	RewriteCond %{HTTP_HOST} ^www\.positiefopvoeden\.nl [NC]
+	RewriteCond %{REQUEST_URI} ^/ze-nl/sitemaps/sitemap_ze_nl.xml
+	RewriteRule ^(.*)$ http://www\.positiefopvoeden\.nl/parentsite/sitemaps/sitemap_ze_nl.xml [R=301,L]
 
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    # START 301 SECTION to redirect sitemap location
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    RewriteCond %{REQUEST_URI} ^/pei-en/sitemaps/sitemap_pei_en.xml
-    RewriteRule ^(.*)$ http://www\.triplep-parenting\.net/parentsite/sitemaps/sitemap_pei_en.xml [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/sitemaps/sitemap_glo_en.xml
-    RewriteRule ^(.*)$ http://www\.triplep-parenting\.net/parentsite3/sitemaps/sitemap_glo_en.xml [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/son-en/sitemaps/sitemap_son_en.xml
-    RewriteRule ^(.*)$ http://www\.triplep-parenting\.net/parentsite/sitemaps/sitemap_son_en.xml [R=301,L]
+	##############################################################################
+	# START 301 SECTION for DRUPAL GENERIC > TPICMS GLO-EN
+	##############################################################################
+	RewriteCond %{HTTP_HOST} ^www\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^\/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/nc-en/sitemaps/sitemap_nc_en.xml
-    RewriteRule ^(.*)$ http://www\.triplep-parenting\.net/parentsite/sitemaps/sitemap_nc_en.xml [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/home/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/home/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/alb-en/sitemaps/sitemap_alb_en.xml
-    RewriteRule ^(.*)$ http://www\.triplep-parenting\.net/parentsite/sitemaps/sitemap_alb_en.xml [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/about-us/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/about-triple-p/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/ska-en/sitemaps/sitemap_ska_en.xml
-    RewriteRule ^(.*)$ http://www\.triplep-parenting\.net/parentsite/sitemaps/sitemap_ska_en.xml [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/about-us/about-professor-matt-sanders/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/about-triple-p/professor-matt-sanders/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/lwlo-uken/sitemaps/sitemap_lwlo_uken.xml
-    RewriteRule ^(.*)$ http://www\.triplep-parenting\.net/parentsite/sitemaps/sitemap_lwlo_uken.xml [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/about-us/awards/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/about-triple-p/professor-matt-sanders/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/nz-uken/sitemaps/sitemap_nz_uken.xml
-    RewriteRule ^(.*)$ http://www\.triplep-parenting\.net/parentsite/sitemaps/sitemap_nz_uken.xml [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/about-us/triple-p-today/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/about-triple-p/triple-p-today/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/uk-en/sitemaps/sitemap_uk_en.xml
-    RewriteRule ^(.*)$ http://www\.triplep-parenting\.uk\.net/parentsite/sitemaps/sitemap_uk_en.xml [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/about-us/where-it-began/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/about-triple-p/where-it-began/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/au-uken/sitemaps/sitemap_au_uken.xml
-    RewriteRule ^(.*)$ http://www\.triplep-parenting\.net\.au/parentsite/sitemaps/sitemap_au_uken.xml [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/proven-to-work/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/about-triple-p/the-evidence/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/qld-uken/sitemaps/sitemap_qld_uken.xml
-    RewriteRule ^(.*)$ http://www\.triplep-parenting\.net\.au/parentsite/sitemaps/sitemap_qld_uken.xml [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/what-can-it-do/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/triple-p/positive-parenting-program/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/nc-uses/sitemaps/sitemap_nc_uses.xml
-    RewriteRule ^(.*)$ http://www\.triplep-paternidad\.net/parentsite/sitemaps/sitemap_nc_uses.xml [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/what-is-it/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/triple-p/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/son-es/sitemaps/sitemap_son_es.xml
-    RewriteRule ^(.*)$ http://www\.triplep-paternidad\.net/parentsite/sitemaps/sitemap_son_es.xml [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/what-parents-say/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/triple-p/what-do-parents-say/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/bal-tr/sitemaps/sitemap_bal_tr.xml
-    RewriteRule ^(.*)$ http://www\.triplep-annebabalik\.net/parentsite/sitemaps/sitemap_bal_tr.xml [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/what-the-experts-say/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/triple-p/what-do-the-experts-say/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/nl-nl/sitemaps/sitemap_nl_nl.xml
-    RewriteRule ^(.*)$ http://www\.positiefopvoeden\.nl/parentsite/sitemaps/sitemap_nl_nl.xml [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/triple-p-shop/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-help/triple-p-shop/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/ams-nl/sitemaps/sitemap_ams_nl.xml
-    RewriteRule ^(.*)$ http://www\.positiefopvoeden\.nl/parentsite/sitemaps/sitemap_ams_nl.xml [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/contact/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/contact/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/nh-nl/sitemaps/sitemap_nh_nl.xml
-    RewriteRule ^(.*)$ http://www\.positiefopvoeden\.nl/parentsite/sitemaps/sitemap_nh_nl.xml [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/contact/all-addresses/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-help/find-a-triple-p-provider/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/gr-nl/sitemaps/sitemap_gr_nl.xml
-    RewriteRule ^(.*)$ http://www\.positiefopvoeden\.nl/parentsite/sitemaps/sitemap_gr_nl.xml [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/contact/form/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/contact/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/ov-nl/sitemaps/sitemap_ov_nl.xml
-    RewriteRule ^(.*)$ http://www\.positiefopvoeden\.nl/parentsite/sitemaps/sitemap_ov_nl.xml [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/ge-nl/sitemaps/sitemap_ge_nl.xml
-    RewriteRule ^(.*)$ http://www\.positiefopvoeden\.nl/parentsite/sitemaps/sitemap_ge_nl.xml [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/li-nl/sitemaps/sitemap_li_nl.xml
-    RewriteRule ^(.*)$ http://www\.positiefopvoeden\.nl/parentsite/sitemaps/sitemap_li_nl.xml [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/ut-nl/sitemaps/sitemap_ut_nl.xml
-    RewriteRule ^(.*)$ http://www\.positiefopvoeden\.nl/parentsite/sitemaps/sitemap_ut_nl.xml [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/contact/local-partners/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/contact/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/zh-nl/sitemaps/sitemap_zh_nl.xml
-    RewriteRule ^(.*)$ http://www\.positiefopvoeden\.nl/parentsite/sitemaps/sitemap_zh_nl.xml [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/disclaimer/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/disclaimer/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/ze-nl/sitemaps/sitemap_ze_nl.xml
-    RewriteRule ^(.*)$ http://www\.positiefopvoeden\.nl/parentsite/sitemaps/sitemap_ze_nl.xml [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/disclaimer/copyright/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/copyright/ [R=301,L]
 
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    # START 301 SECTION for DRUPAL > TPICMS
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    RewriteCond %{HTTP_HOST} ^www.glasgow.triplep-staypositive.net$
-    RewriteRule ^(.*)$ http://glasgow.triplep-staypositive.net$1 [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/disclaimer/privacy/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/privacy-policy/ [R=301,L]
 
-    RewriteCond %{HTTP_HOST} ^www.balcova.triplep-staypositive.net$
-    RewriteRule ^(.*)$ http://balcova.triplep-staypositive.net/$1 [R=301,L]
+	RewriteCond %{HTTP_HOST} ^triplep\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/home [R=301,L]
 
-    RewriteCond %{HTTP_HOST} ^www\.triplep-staypositive\.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^triplep\.triplep-staypositive\.net$ [NC]
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/ [R=301,L]
+	RewriteCond %{HTTP_HOST} ^triplep\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/home/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/home [R=301,L]
 
-    RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/home/ [R=301,L]
+	RewriteCond %{HTTP_HOST} ^triplep\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/about-us/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/about-triple-p/ [R=301,L]
 
-    RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^www.longford-westmeath.triplep-staypositive.net$ [NC]
-    RewriteCond %{REQUEST_URI} ^/(.*)$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/home/ [R=301,L]
+	RewriteCond %{HTTP_HOST} ^triplep\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/about-us/about-professor-matt-sanders/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/triple-p/about-us/awards/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/about-triple-p/professor-matt-sanders/ [R=301,L]
 
-    RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^www.new-zealand.triplep-staypositive.net$ [NC]
-    RewriteCond %{REQUEST_URI} ^/(.*)$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/home/ [R=301,L]
+	RewriteCond %{HTTP_HOST} ^triplep\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/about-us/triple-p-today/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/about-triple-p/triple-p-today/ [R=301,L]
 
-    RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
-    RewriteCond %{REQUEST_URI} ^/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/son-en/ [R=301,L]
+	RewriteCond %{HTTP_HOST} ^triplep\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/about-us/where-it-began/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/about-triple-p/where-it-began/ [R=301,L]
 
-    RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
-    RewriteCond %{REQUEST_URI} ^/(.*)$ [NC]
-    RewriteCond %{REQUEST_URI} !^/son-es/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/$1 [R=301,L]
+	RewriteCond %{HTTP_HOST} ^triplep\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/proven-to-work/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/about-triple-p/the-evidence/ [R=301,L]
 
-    RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
-    RewriteCond %{REQUEST_URI} ^/(.*)$ [NC]
-    RewriteCond %{REQUEST_URI} !^/son-en/$
-    RewriteRule ^(.*)$ http://www.triplep-paternidad.net/$1 [R=301,L]
+	RewriteCond %{HTTP_HOST} ^triplep\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/what-can-it-do/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/triple-p/positive-parenting-program/ [R=301,L]
 
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    # START 301 SECTION www.triplep-parenting.net/glo-en/ PS V2.0 -> V3.0
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    RewriteCond %{REQUEST_URI} ^/glo-en/home/$ [OR]
-    RewriteCond %{REQUEST_URI} ^/glo-en/get-help/$ [OR]
-    RewriteCond %{REQUEST_URI} ^/glo-en/get-help/join-a-triple-p-trial/$ [OR]
-    RewriteCond %{REQUEST_URI} ^/glo-en/about-triple-p/$ [NC]
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/triple-p/ [R=301,L]
+	RewriteCond %{HTTP_HOST} ^triplep\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/what-is-it$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/triple-p [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/triple-p/positive-parenting-program/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/about-triple-p/positive-parenting-program/ [R=301,L]
+	RewriteCond %{HTTP_HOST} ^triplep\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/what-parents-say/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/triple-p/what-parents-say/get-help/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/triple-p/what-do-parents-say/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/about-triple-p/triple-p-today/$ [OR]
-    RewriteCond %{REQUEST_URI} ^/glo-en/about-triple-p/where-it-began/$ [NC]
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/about-triple-p/positive-parenting-program/our-history/ [R=301,L]
+	RewriteCond %{HTTP_HOST} ^triplep\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/what-the-experts-say/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/triple-p/what-do-the-experts-say/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/about-triple-p/professor-matt-sanders/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/about-triple-p/positive-parenting-program/professor-matt-sanders/ [R=301,L]
+	RewriteCond %{HTTP_HOST} ^triplep\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/triple-p-shop/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-help/triple-p-shop/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/triple-p/does-it-work/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/about-triple-p/does-it-work/ [R=301,L]
+	RewriteCond %{HTTP_HOST} ^triplep\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/contact/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/contact/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/about-triple-p/the-evidence/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/about-triple-p/does-it-work/the-evidence/ [R=301,L]
+	RewriteCond %{HTTP_HOST} ^triplep\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/contact/all-addresses/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-help/find-a-triple-p-provider/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/triple-p/frequently-asked-questions/$ [OR]
-    RewriteCond %{REQUEST_URI} ^/glo-en/fast-facts/$ [NC]
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/about-triple-p/faqs/ [R=301,L]
+	RewriteCond %{HTTP_HOST} ^triplep\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/contact/form/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/contact/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/get-help/triple-p-shop/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/about-triple-p/triple-p-shop/ [R=301,L]
+	RewriteCond %{HTTP_HOST} ^triplep\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/contact/local-partners/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/contact/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/positive-parenting/$ [OR]
-    RewriteCond %{REQUEST_URI} ^/glo-en/positive-parenting/five-steps-to-positive-parenting/$ [OR]
-    RewriteCond %{REQUEST_URI} ^/glo-en/positive-parenting/five-steps-to-positive-parenting-teenagers/$ [OR]
-    RewriteCond %{REQUEST_URI} ^/glo-en/positive-parenting/have-a-positive-learning-environment/$ [OR]
-    RewriteCond %{REQUEST_URI} ^/glo-en/positive-parenting/have-realistic-expectations/$ [OR]
-    RewriteCond %{REQUEST_URI} ^/glo-en/positive-parenting/take-care-of-yourself/$ [OR]
-    RewriteCond %{REQUEST_URI} ^/glo-en/positive-parenting/use-assertive-discipline/$ [OR]
-    RewriteCond %{REQUEST_URI} ^/glo-en/positive-parenting/create-a-safe-interesting-environment/$ [OR]
-    RewriteCond %{REQUEST_URI} ^/glo-en/positive-parenting/triple-p-podcasts/$ [NC]
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/5-steps-to-positive-parenting/ [R=301,L]
+	RewriteCond %{HTTP_HOST} ^triplep\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/disclaimer/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/disclaimer/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/positive-parenting/create-a-safe-interesting-environment/bubble-wrap-kids/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/hot-topics-about-raising-children-and-teenagers/how-to-boost-kids-confidence-and-cope-with-disappointment/ [R=301,L]
+	RewriteCond %{HTTP_HOST} ^triplep\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/disclaimer/copyright/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/copyright/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/positive-parenting/create-a-safe-interesting-environment/the-screen-time-dilemma/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/hot-topics-about-raising-children-and-teenagers/kids-using-technology-the-screen-time-dilemma/ [R=301,L]
+	RewriteCond %{HTTP_HOST} ^triplep\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/disclaimer/privacy/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/privacy-policy [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/positive-parenting/create-a-safe-interesting-environment/should-kids-take-risks/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/hot-topics-about-raising-children-and-teenagers/helicopter-parents-why-kids-should-take-risks/ [R=301,L]
+	RewriteCond %{HTTP_HOST} ^triplep\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/regions/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/home/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/positive-parenting/have-a-positive-learning-environment/helping-kids-solve-problems-for-themselves/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/hot-topics-about-raising-children-and-teenagers/how-to-teach-kids-solve-problems-for-themselves/ [R=301,L]
+	##############################################################################
+	# START 301 SECTION > 2014-10-01: ELIMINATE DEMO.TRIPLEP-STAYPOSITIVE.NET
+	##############################################################################
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/positive-parenting/have-a-positive-learning-environment/why-we-should-talk-to-our-children/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/hot-topics-about-raising-children-and-teenagers/why-we-should-talk-to-our-children/ [R=301,L]
+	RewriteCond %{HTTP_HOST} ^demo\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/(.*)$
+	RewriteRule ^(.*)$ http://www.triplep.net/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/positive-parenting/use-assertive-discipline/getting-out-the-door-on-time/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/hot-topics-about-raising-children-and-teenagers/kids-morning-routine-getting-out-the-door-on-time/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/positive-parenting/have-realistic-expectations/single-parenting/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/hot-topics-about-raising-children-and-teenagers/single-parenting-simple-ideas-to-make-it-a-little-easier/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/positive-parenting/have-realistic-expectations/are-you-in-one-of-the-common-parent-traps/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/hot-topics-about-raising-children-and-teenagers/yelling-at-kids-how-to-avoid-common-parent-traps/ [R=301,L]
+	##############################################################################
+	# START 301 SECTION > 2014-04-22: FORCE 'WWW' PREFIX
+	# OLD DRUPAL URLS ON PURPOSE AS THEY ARE / WILL BE REDIRECTED TO NEW INCLUDING REQUEST URI
+	##############################################################################
+	RewriteCond %{HTTP_HOST} ^www.glasgow.triplep-staypositive.net$
+	RewriteRule ^(.*)$ http://glasgow.triplep-staypositive.net$1 [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/positive-parenting/have-realistic-expectations/sore-loser-syndrome/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/hot-topics-about-raising-children-and-teenagers/sore-loser-syndrome/ [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www.alberta.triplep-staypositive.net$
+	RewriteRule ^(.*)$ http://alberta.triplep-staypositive.net/$1 [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^www.sonoma-county.triplep-staypositive.net$
+	RewriteRule ^(.*)$ http://sonoma-county.triplep-staypositive.net/$1 [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^www.balcova.triplep-staypositive.net$
+	RewriteRule ^(.*)$ http://balcova.triplep-staypositive.net/$1 [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/positive-parenting/take-care-of-yourself/team-parents-argue-less/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/hot-topics-about-raising-children-and-teenagers/different-parenting-styles-team-parents-argue-less/ [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www.longford-westmeath.triplep-staypositive.net$
+	RewriteRule ^(.*)$ http://longford-westmeath.triplep-staypositive.net/$1 [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/positive-parenting/take-care-of-yourself/are-you-stressed/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/hot-topics-about-raising-children-and-teenagers/parenting-stress-why-you-deserve-a-break/ [R=301,L]
+	RewriteCond %{HTTP_HOST} ^www.new-zealand.triplep-staypositive.net$
+	RewriteRule ^(.*)$ http://new-zealand.triplep-staypositive.net/$1 [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^positiefopvoeden.nl$
+	RewriteRule ^(.*)$ http://www.positiefopvoeden.nl/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/positive-parenting/take-care-of-yourself/juggling-work-and-family/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/hot-topics-about-raising-children-and-teenagers/juggling-work-and-family/ [R=301,L]
+	RewriteCond %{HTTP_HOST} ^triplep-parenting.net$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/positive-parenting/five-steps-to-positive-parenting-teenagers/leaving-school/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/hot-topics-about-raising-children-and-teenagers/leaving-school-how-to-make-it-easier-for-everyone/ [R=301,L]
+	RewriteCond %{HTTP_HOST} ^triplep-parenting.uk.net$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.uk.net/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/positive-parenting/five-steps-to-positive-parenting-teenagers/money-and-work/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/hot-topics-about-raising-children-and-teenagers/jobs-for-teenagers-should-parents-encourage-it/ [R=301,L]
+	RewriteCond %{HTTP_HOST} ^triplep-parenting.net.au$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net.au/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^triplep-paternidad.net$
+	RewriteRule ^(.*)$ http://www.triplep-paternidad.net/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/positive-parenting/five-steps-to-positive-parenting-teenagers/online-bullying/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/hot-topics-about-raising-children-and-teenagers/can-you-protect-your-kids-from-online-bullying/ [R=301,L]
+	RewriteCond %{HTTP_HOST} ^triplep-annebabalik.net$
+	RewriteRule ^(.*)$ http://www.triplep-annebabalik.net/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/positive-parenting/five-steps-to-positive-parenting-teenagers/talking-about-sex/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/hot-topics-about-raising-children-and-teenagers/birds-and-bees-talk-with-teenagers/ [R=301,L]
+	RewriteCond %{HTTP_HOST} ^triplep\.cl$ [OR]
+	RewriteCond %{HTTP_HOST} ^chile.triplep-staypositive.net$
+	RewriteRule ^(.*)$ http://www.triplep.cl/$1 [L,R=301]
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/positive-parenting/five-steps-to-positive-parenting-teenagers/the-three-vices-smoking-drugs-and-alcohol/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/hot-topics-about-raising-children-and-teenagers/smoking-drugs-alcohol-what-to-teach-your-teenager/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/get-help/which-triple-p-is-right-for-me/$ [OR]
-    RewriteCond %{REQUEST_URI} ^/glo-en/get-help/which-triple-p-is-right-for-me/level-2-brief-primary-care-triple-p-for-just-one-specific-problem$ [OR]
-    RewriteCond %{REQUEST_URI} ^/glo-en/get-help/which-triple-p-is-right-for-me/indigenous-triple-p-for-australian-indigenous-families/$ [NC]
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/triple-p-courses-for-parents-of-children-birth-12-years/ [R=301,L]
+
+	##############################################################################
+	# START 301 SECTION  PARENT SITE > PROVIDER PATH TRIPLEP-STAYPOSITIVE.NET
+	##############################################################################
+	RewriteCond %{HTTP_HOST} ^www.triplep-parenting.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/provider
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/provider/ [R=301,L]
 
-    RewriteCond %{REQUEST_URI} ^/glo-en/get-help/which-triple-p-is-right-for-me/level-2-seminar-triple-p-positive-parenting-in-a-nutshell/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/triple-p-courses-for-parents-of-children-birth-12-years/triple-p-seminars-positive-parenting-in-a-nutshell/ [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/glo-en/get-help/which-triple-p-is-right-for-me/level-3-discussion-group-triple-p-for-common-parenting-problems/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/triple-p-courses-for-parents-of-children-birth-12-years/triple-p-discussion-groups-for-common-parenting-problems/ [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/glo-en/get-help/which-triple-p-is-right-for-me/level-3-primary-care-triple-p-for-everyday-problems/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/triple-p-courses-for-parents-of-children-birth-12-years/primary-care-triple-p-for-everyday-problems/ [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/glo-en/get-help/which-triple-p-is-right-for-me/level-4-group-triple-p-all-you-want-to-know/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/triple-p-courses-for-parents-of-children-birth-12-years/group-all-you-want-to-know-about-parenting/ [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/glo-en/get-help/which-triple-p-is-right-for-me/level-4-standard-triple-p-for-more-serious-behavior-problems/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/triple-p-courses-for-parents-of-children-birth-12-years/standard/ [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/glo-en/get-help/which-triple-p-is-right-for-me/level-5-enhanced-triple-p-for-more-serious-family-problems/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/triple-p-courses-for-parents-of-children-birth-12-years/enhanced/ [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/glo-en/get-help/which-triple-p-is-right-for-me/level-5-pathways-triple-p-keeping-families-together/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/triple-p-courses-for-parents-of-children-birth-12-years/pathways/ [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/glo-en/get-help/which-triple-p-is-right-for-me/stepping-stones-triple-p-for-parents-of-a-child-with-a-disability/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/triple-p-courses-for-parents-of-children-birth-12-years/stepping-stones/ [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/glo-en/get-help/which-triple-p-is-right-for-me/family-transitions-triple-p-helping-families-through-divorce-or-separation/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/triple-p-courses-for-parents-of-children-birth-12-years/family-transitions/ [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/glo-en/get-help/which-triple-p-is-right-for-me/lifestyle-triple-p-keeping-kids-healthy-and-active/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/triple-p-courses-for-parents-of-children-birth-12-years/lifestyle/ [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/glo-en/get-help/which-teen-triple-p-is-right-for-me/$ [OR]
-    RewriteCond %{REQUEST_URI} ^/glo-en/get-help/which-teen-triple-p-is-right-for-me/level-2-brief-primary-care-teen-triple-p-quick-tips-for-a-specific-problem-with-your-teenager/$ [NC]
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/triple-p-courses-for-parents-of-teens/ [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/glo-en/get-help/which-teen-triple-p-is-right-for-me/level-2-seminar-teen-triple-p-positive-parenting-of-teens-in-a-nutshell/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/triple-p-courses-for-parents-of-teens/seminars/ [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/glo-en/get-help/which-teen-triple-p-is-right-for-me/level-3-teen-triple-p-discussion-group-for-the-common-problems-of-raising-teens/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/triple-p-courses-for-parents-of-teens/discussion-groups/ [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/glo-en/get-help/which-teen-triple-p-is-right-for-me/level-3-primary-care-teen-triple-p-for-everyday-problems-with-your-teenager/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/triple-p-courses-for-parents-of-teens/primary-care/ [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/glo-en/get-help/which-teen-triple-p-is-right-for-me/level-4-group-teen-triple-p-all-you-want-to-know-about-parenting-teens/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/triple-p-courses-for-parents-of-teens/group/ [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/glo-en/get-help/which-teen-triple-p-is-right-for-me/level-4-standard-teen-triple-p-for-more-serious-behavior-problems-with-your-teenager/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/get-started/triple-p-courses-for-parents-of-teens/standard/ [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/glo-en/get-help/find-a-triple-p-provider/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/find-help/find-a-provider/ [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/glo-en/get-help/which-triple-p-is-right-for-me/triple-p-online-your-personal-parenting-program-247/$ [OR]
-    RewriteCond %{REQUEST_URI} ^/glo-en/find-help/tpol/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/find-help/triple-p-online/ [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/glo-en/read-that-blog/$ [OR]
-    RewriteCond %{REQUEST_URI} ^/glo-en/news(.*)$ [NC]
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/blog-and-videos/blogs-and-news/ [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/glo-en/our-videos/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/blog-and-videos/watch-videos/ [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/glo-en/our-videos/changing-lives/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/blog-and-videos/watch-videos/our-success-stories/ [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/glo-en/our-videos/what-parents-say/$ [OR]
-    RewriteCond %{REQUEST_URI} ^/glo-en/triple-p/what-do-parents-say$ [OR]
-    RewriteCond %{REQUEST_URI} ^/glo-en/triple-p/what-do-parents-say/watch-what-parents-say$ [NC]
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/blog-and-videos/watch-videos/what-parents-say/ [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/glo-en/our-videos/what-the-experts-say/$ [OR]
-    RewriteCond %{REQUEST_URI} ^/glo-en/triple-p/what-do-the-experts-say$ [OR]
-    RewriteCond %{REQUEST_URI} ^/glo-en/triple-p/what-do-the-experts-say/read-what-the-experts-say$ [OR]
-    RewriteCond %{REQUEST_URI} ^/glo-en/triple-p/what-do-the-experts-say/watch-what-the-experts-say$ [NC]
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/blog-and-videos/watch-videos/what-experts-say/ [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/glo-en/our-videos/triple-p-online/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/blog-and-videos/watch-videos/triplep-online/ [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/glo-en/triple-p/what-do-parents-say/read-what-other-parents-say/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/blog-and-videos/read-what-people-say/ [R=301,L]
-
-    RewriteCond %{REQUEST_URI} ^/glo-en/get-help/find-a-triple-p-provider/positive-parenting-in-elkhart-county/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/find-help/more-triple-p-regions/positive-parenting-in-elkhart-county/ [R=301,L]
-
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    # REWRITE TRIPLEP-PARENTING.NET/GLA-UKEN TO GLASGOW.TRIPLEP-STAYPOSITIVE.NET
-    # INSTANCE TARGETTING SUPPORT FOR GLASGOW THROUGH TRIPLEP_PARENTING. AN INSTANCE
-    # RECORD IS CREATED IN PS2_BBCMS_INSTANCES AND APOINTED AS PREFERED INSTANCE
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    RewriteCond %{HTTP_HOST} ^www\.triplep-parenting\.net$ [NC]
-    RewriteCond %{REQUEST_URI} ^/gla-uken
-    RewriteRule ^(.*)$ http://glasgow.triplep-staypositive.net/ [R=301,L]
-
-    RewriteCond %{HTTP_HOST} ^www\.triplep-parenting\.net$ [NC]
-    RewriteCond %{REQUEST_URI} ^/cl-es
-    RewriteRule ^(.*)$ http://www.triplep.cl/ [R=301,L]
-
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    # START 301 SECTION  PARENT SITE > PROVIDER PATH TRIPLEP-STAYPOSITIVE.NET
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    RewriteCond %{HTTP_HOST} ^www.triplep-parenting.net$ [NC]
-    RewriteCond %{REQUEST_URI} ^/practitioners/provider
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/provider/ [R=301,L]
-
-    ### 2013-06-25 JH
-    RewriteCond %{HTTP_HOST} ^balcova.triplep-staypositive.net$ [NC]
-    RewriteCond %{REQUEST_URI} ^\/$
-    RewriteRule ^(.*)$ http://balcova.triplep-staypositive.net/practitioners/provider [L]
-
-    ### 2013-11-20 JH
-    RewriteCond %{HTTP_HOST} ^north-carolina.triplep-staypositive.net$ [NC]
-    RewriteCond %{REQUEST_URI} ^\/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/provider/ [L]
-
-    RewriteCond %{HTTP_HOST} ^gra-en.triplep-usag.net$ [NC]
-    RewriteCond %{REQUEST_URI} ^\/$ [NC]
-    RewriteRule ^(.*)$ http://gra-en.triplep-staypositive.net/practitioners/provider [L]
-
-    RewriteCond %{HTTP_HOST} ^gra-en.triplep-staypositive.net$ [NC]
-    RewriteCond %{REQUEST_URI} ^\/$ [NC]
-    RewriteRule ^(.*)$ http://gra-en.triplep-staypositive.net/practitioners/provider [L]
-
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    # START 301 SECTION > REWRITE RULES FOR PROVIDER LOGIN URLS THAT ARE NOT CONSIDERED VALID
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    RewriteCond %{HTTP_HOST} !^gra-en.triplep-staypositive.net$ [NC]
-    RewriteCond %{HTTP_HOST} !^balcova.triplep-staypositive.net$ [NC]
-    RewriteCond %{HTTP_HOST} !^longford-westmeath.triplep-staypositive.net$ [NC]
-    RewriteCond %{HTTP_HOST} !^glasgow.triplep-staypositive.net$ [NC]
-    RewriteCond %{HTTP_HOST} !^new-zealand.triplep-staypositive.net$ [NC]
-    RewriteCond %{HTTP_HOST} !^au-en.triplep-steppingstones.net$ [NC]
-    RewriteCond %{REQUEST_URI} ^/practitioners/login
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/provider/provider_login/ [R=301,L,NC]
-
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    # START 301 SECTION positiefopvoeden.nl/ admin and beroepskracht to .net
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    RewriteCond %{HTTP_HOST} ^positiefopvoeden\.nl$ [OR]
-    RewriteCond %{HTTP_HOST} ^www\.positiefopvoeden\.nl$ [NC]
-    RewriteCond %{REQUEST_URI} ^/admin [OR]
-    RewriteCond %{REQUEST_URI} ^/localadmin [OR]
-    RewriteCond %{REQUEST_URI} ^/beroepskracht [OR]
-    RewriteCond %{REQUEST_URI} ^/onlineadvies [OR]
-    RewriteCond %{REQUEST_URI} ^/tools
-    RewriteRule ^(.*)$ http://www.positiefopvoeden.net/$1 [QSA,L,R=301]
-
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    # START 301 SECTION positiefopvoeden.nl PS V2.0 deleted instances
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    RewriteCond %{REQUEST_URI} ^/nb-nl/ [OR]
-    RewriteCond %{REQUEST_URI} ^/ze-nl/ [OR]
-    RewriteCond %{REQUEST_URI} ^/fr-nl/
-    RewriteRule ^(.*)$ http://www.positiefopvoeden.nl/nl-nl/home/ [QSA,L,R=301]
-
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    # START 301 SECTION to redirect renamed pages, vanity or campaign URLS
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    # START 301 RULE triplep-parenting.net Model B vanity URL Elkhart County
-    RewriteCond %{HTTP_HOST} ^www\.triplep-parenting\.net [NC]
-    RewriteCond %{REQUEST_URI} ^/elkhartcounty
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/find-help/more-triple-p-regions/positive-parenting-in-elkhart-county/?itb=feb93033a7ab04ea442b08103ec019a4 [R=301,L]
-
-    # START 301 RULE positiefopvoeden.nl PS V2.0 /AGENDA/
-    RewriteCond %{HTTP_HOST} ^www\.positiefopvoeden\.nl$ [NC]
-    RewriteCond %{REQUEST_URI} ^(.*)agenda
-    RewriteRule ^(.*)agenda(.*)$ http://www.positiefopvoeden.nl/$1advies-en-hulp/vind-een-positief-opvoeden-sessie$2 [QSA,L,R=301]
-
-    # START 301 RULE positiefopvoeden.nl FT -> Gescheiden ouders
-    RewriteCond %{HTTP_HOST} ^www.positiefopvoeden.nl$
-    RewriteCond %{REQUEST_URI} ^(.*)cursus-family-transitions(.*)$
-    RewriteRule ^(.*)cursus-family-transitions(.*)$ http://www.positiefopvoeden.nl/$1cursus-positief-opvoeden-voor-gescheiden-ouders$2 [QSA,L,R=301]
-
-    # START 301 RULE www.triplep-parenting.uk.net TPOL CAMPAIGN SECTION
-    RewriteCond %{HTTP_HOST} ^www.triplep-parenting.uk.net$
-    RewriteCond %{QUERY_STRING} !dfc69ee4c48a622e2bcda2c3d2a219d0
-    RewriteCond %{REQUEST_URI} ^/uk-en/get-help/which-triple-p-is-right-for-me/triple-p-online-your-personal-parenting-programme-247/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.uk.net/uk-en/get-help/which-triple-p-is-right-for-me/triple-p-online-your-personal-parenting-programme-247/?itb=dfc69ee4c48a622e2bcda2c3d2a219d0 [QSA,L,R=301]
-
-    # START 301 RULE www.triplep-parenting.uk.net vanity URL /online/
-    RewriteCond %{HTTP_HOST} ^www.triplep-parenting.uk.net$ [NC]
-    RewriteCond %{REQUEST_URI} ^/online/$
-    RewriteRule ^(.*)online/(.*)$ http://www.triplep-parenting.uk.net/$1uk-en/get-help/which-triple-p-is-right-for-me/triple-p-online-your-personal-parenting-programme-247/?itb=dfc69ee4c48a622e2bcda2c3d2a219d0$2 [QSA,L,R=301]
-
-    # START 301 RULE www.triplep-parenting.uk.net Change in Page path TPOL Conversion email
-    RewriteCond %{HTTP_HOST} ^triplep-parenting.uk.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^www.triplep-parenting.uk.net$
-    RewriteCond %{REQUEST_URI} ^/uk-en/get-help/which-triple-p-is-right-for-me/triple-p-online-your-personal-parenting-programme-247/triple-p-online-start-your-course/(.*)
-    RewriteRule ^(.*)$ http://www.triplep-parenting.uk.net/uk-en/get-help/which-triple-p-is-right-for-me/triple-p-online-your-personal-parenting-programme-247/tpol-conversion-email/?itb=b665bf733325cebbccee5935b1272616 [QSA,L,R=301]
-
-    # START 301 RULE www.triplep-parenting.net.au TPOL CAMPAIGN SECTION
-    RewriteCond %{HTTP_HOST} ^www.triplep-parenting.net.au$ [NC]
-    RewriteCond %{QUERY_STRING} !ca91c5464e73d3066825362c3093a45f
-    RewriteCond %{REQUEST_URI} ^/au-uken/get-help/which-triple-p-is-right-for-me/triple-p-online-your-personal-parenting-program-247/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net.au/au-uken/get-help/which-triple-p-is-right-for-me/triple-p-online-your-personal-parenting-program-247/?itb=ca91c5464e73d3066825362c3093a45f [QSA,L,R=301]
-
-    # START 301 RULE www.triplep-parenting.net.au vanity URL /online/
-    RewriteCond %{HTTP_HOST} ^www.triplep-parenting.net.au$ [NC]
-    RewriteCond %{REQUEST_URI} ^/online/
-    RewriteRule ^(.*)online/(.*)$ http://www.triplep-parenting.net.au/$1au-uken/get-help/which-triple-p-is-right-for-me/triple-p-online-your-personal-parenting-program-247/?itb=ca91c5464e73d3066825362c3093a45f$2 [QSA,L,R=301]
-
-    # START 301 RULE www.triplep-parenting.net.au vanity URL /tpol/
-    RewriteCond %{HTTP_HOST} ^triplep-parenting\.net\.au$ [OR]
-    RewriteCond %{HTTP_HOST} ^www\.triplep-parenting\.net\.au$ [NC]
-    RewriteCond %{REQUEST_URI} ^/tpol/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net.au/qld-uken/get-help/which-triple-p-is-right-for-me/triple-p-online-your-personal-parenting-program-247/?itb=8207f8d79c224f5feef34fe2c2d6adfe&utm_source=VanityUrl&utm_medium=TPOLCampaignVanityUrl&utm_campaign=TPOL [QSA,L,R=301]
-
-    # START 301 RULE www.triplep-parenting.net.au Change in Page path TPOL Conversion email
-    RewriteCond %{HTTP_HOST} ^triplep-parenting\.net\.au$ [OR]
-    RewriteCond %{HTTP_HOST} ^www\.triplep-parenting\.net\.au$ [NC]
-    RewriteCond %{REQUEST_URI} ^/au-uken/get-help/which-triple-p-is-right-for-me/triple-p-online-your-personal-parenting-program-247/triple-p-online-start-your-course/(.*)
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net.au/au-uken/get-help/which-triple-p-is-right-for-me/triple-p-online-your-personal-parenting-program-247/tpol-conversion-email/?itb=8d917ee2013f097c962fa85297f0ffea [QSA,L,R=301]
-
-    # START 301 RULE www.triplep-parenting.net.au redirect to QLD-UKEN
-    RewriteCond %{HTTP_HOST} ^triplep-parenting\.net\.au$ [OR]
-    RewriteCond %{HTTP_HOST} ^www\.triplep-parenting\.net\.au$ [NC]
-    RewriteCond %{REQUEST_URI} ^/au-uken/get-help/for-queensland-parents/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net.au/qld-uken/get-help/which-triple-p-is-right-for-me/triple-p-online-your-personal-parenting-program-247/?itb=8207f8d79c224f5feef34fe2c2d6adfe#qld-parents-register-now [QSA,L,R=301,NE]
-
-    # START 301 RULE D2P CABLE TV US CAMPAIGN
-    RewriteCond %{HTTP_HOST} ^www\.parentinghelpnow\.com$ [NC]
-    RewriteCond %{REQUEST_URI} ^/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/find-help/triple-p-online/?itb=4b5b81483048c8942ed00caaa17b9535&utm_source=parentinghelpnow-com&utm_medium=tv&utm_campaign=us-tpol-d2p [QSA,L,R=301,NE]
-
-    # START 301 RULE D2P RADIO US CAMPAIGN
-    RewriteCond %{HTTP_HOST} ^www\.provenparenting\.net$ [NC]
-    RewriteCond %{REQUEST_URI} ^/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/find-help/triple-p-online/?itb=4b5b81483048c8942ed00caaa17b9535&utm_source=provenparenting-net&utm_medium=radio&utm_campaign=us-tpol-d2p [QSA,L,R=301,NE]
-
-    # START 301 RULE D2P PODCAST US CAMPAIGN
-    RewriteCond %{HTTP_HOST} ^www\.provenparenting\.us$ [NC]
-    RewriteCond %{REQUEST_URI} ^/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/find-help/triple-p-online/?itb=4b5b81483048c8942ed00caaa17b9535&utm_source=provenparenting-us&utm_medium=podcasts&utm_campaign=us-tpol-d2p [QSA,L,R=301,NE]
-
-    # START 301 RULE D2P DM US CAMPAIGN
-    RewriteCond %{HTTP_HOST} ^triplep-parenting\.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^www\.triplep-parenting\.net$ [NC]
-    RewriteCond %{REQUEST_URI} ^/parentinghelp/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/find-help/triple-p-online/?itb=4b5b81483048c8942ed00caaa17b9535&utm_source=TPOL_DM&utm_medium=DM&utm_campaign=US-DM-campaign [QSA,L,R=301,NE]
-
-    # START 301 RULE D2P PRINT US SOUTH CAROLINA CAMPAIGN
-    RewriteCond %{HTTP_HOST} ^triplep-parenting\.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^www\.triplep-parenting\.net$ [NC]
-    RewriteCond %{REQUEST_URI} ^/provenparenting/$
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/glo-en/find-help/triple-p-online/?itb=4b5b81483048c8942ed00caaa17b9535&utm_source=booklet&utm_medium=ad&utm_campaign=south-carolina-dance-school [QSA,L,R=301,NE]
-
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    # START 301 SECTION  TRIPLEP-STAYPOSITIVE.NL > TRIPLEP-PARENTING.NET
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    RewriteCond %{HTTP_HOST} ^triplep-staypositive\.nl$ [OR]
-    RewriteCond %{HTTP_HOST} ^www\.triplep-staypositive\.nl$ [NC]
-    RewriteRule ^(.*)$ http://www.triplep-parenting.net/ [L,R=301]
-
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    # START 301 SECTION > REWRITE RULES FOR URLS THAT ARE NOT CONSIDERED VALID
-    # TODO: CHANGE REWRITECOND TO CHECK FOR THE EXCEPTION
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-steppingstones\.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^www.new-zealand\.triplep-steppingstones\.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^gra-en\.triplep-steppingstones\.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^www\.gra-en\.triplep-steppingstones\.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^glasgow\.triplep-steppingstones\.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^www\.glasgow.triplep-steppingstones\.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^balcova\.triplep-steppingstones\.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^www\.balcova.triplep-steppingstones\.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^chile\.triplep-steppingstones\.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^www\.chile.triplep-steppingstones\.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^alberta\.triplep-steppingstones\.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^www\.alberta.triplep-steppingstones\.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^sonoma-county\.triplep-steppingstones\.net$
-    RewriteRule ^(.*)$ http://www.triplep-steppingstones.net/ [R=301,L,NC]
-
-    RewriteCond %{HTTP_HOST} ^au-en.triplep-staypositive.net$ [NC]
-    RewriteCond %{REQUEST_URI} ^/$ [OR]
-    RewriteCond %{REQUEST_URI} ^/practitioners/$
-    RewriteRule ^(.*)$ http://au-en.triplep-steppingstones.net/practitioners/login/ [R=301,L]
-
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    # START 301 SECTION TRIPLEP-STEPPINGSTONES SSTP PS V1
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    RewriteCond %{HTTP_HOST} ^triplep-steppingstones.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^au-en.triplep-steppingstones.net$ [NC]
-    RewriteCond %{REQUEST_URI} ^\/$ [NC]
-    RewriteRule ^(.*)$ http://www.triplep-steppingstones.net/ [L]
-
-    # stepping stones files
-    RewriteCond %{HTTP_HOST} ^www.triplep-steppingstones.net$ [NC]
-    RewriteCond %{REQUEST_URI} !^/practitioners [NC]
-    RewriteCond %{REQUEST_URI} !^/admin [NC]
-    RewriteCond %{REQUEST_URI} !^/taxonomy [NC]
-    RewriteCond %{REQUEST_URI} !^/node [NC]
-    RewriteCond %{REQUEST_URI} !^/devel [NC]
-    RewriteCond %{REQUEST_URI} !^/filefield [NC]
-    RewriteCond %{REQUEST_URI} !^/logout [NC]
-    RewriteCond %{REQUEST_URI} !^/system [NC]
-    RewriteCond %{REQUEST_URI} !^/disclaimer [NC]
-    RewriteCond %{REQUEST_URI} !^/misc [NC]
-    RewriteCond %{REQUEST_URI} !^/user [NC]
-    RewriteCond %{REQUEST_URI} ^/concrete [OR]
-    RewriteCond %{REQUEST_URI} ^/themes [OR]
-    RewriteCond %{REQUEST_URI} ^/packages [OR]
-    RewriteCond %{REQUEST_URI} ^/files [OR]
-    RewriteCond %{REQUEST_URI} ^/updates [OR]
-    RewriteCond %{REQUEST_URI} ^/images [OR]
-    RewriteCond %{REQUEST_URI} ^/js [OR]
-    RewriteCond %{REQUEST_URI} ^/css
-    RewriteRule ^(.*)$ /steppingstones/$1 [QSA,L]
-
-    # stepping stones urls
-    RewriteCond %{HTTP_HOST} ^www.triplep-steppingstones.net$ [NC]
-    RewriteCond %{REQUEST_URI} !^/practitioners [NC]
-    RewriteCond %{REQUEST_URI} !^/admin [NC]
-    RewriteCond %{REQUEST_URI} !^/taxonomy [NC]
-    RewriteCond %{REQUEST_URI} !^/devel [NC]
-    RewriteCond %{REQUEST_URI} !^/node [NC]
-    RewriteCond %{REQUEST_URI} !^/filefield [NC]
-    RewriteCond %{REQUEST_URI} !^/logout [NC]
-    RewriteCond %{REQUEST_URI} !^/system [NC]
-    RewriteCond %{REQUEST_URI} !^/user [NC]
-    RewriteCond %{REQUEST_URI} !^/disclaimer [NC]
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME}/index.html !-f
-    RewriteCond %{REQUEST_FILENAME}/index.php !-f
-    RewriteRule ^(.*)$ index.php/$1 [L]
-
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    # START 301 SECTION TRIPLEP-PARENTING PS
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    # Redirect all login sections to the new admin subdomain
-    RewriteCond %{REQUEST_URI} ^/login [NC]
-    RewriteCond %{HTTP_HOST} !^(ps2|ps3).triplep-parenting.net$ [NC]
-    RewriteRule ^(.*)$ http://ps2.triplep-parenting.net/login/ [L,R=301]
-
-    # parentsite 3 files
-    RewriteCond %{REQUEST_URI} ^/themes/parentsite3
-    RewriteRule ^(.*)$ /parentsite3/$1 [QSA,L]
-
-	RewriteCond %{HTTP_HOST} ^ps3.triplep-parenting.net$ [NC]
-    RewriteCond %{REQUEST_URI} !^/practitioners [NC]
-    RewriteCond %{REQUEST_URI} !^/admin [NC]
-    RewriteCond %{REQUEST_URI} !^/taxonomy [NC]
-    RewriteCond %{REQUEST_URI} !^/node [NC]
-    RewriteCond %{REQUEST_URI} !^/devel [NC]
-    RewriteCond %{REQUEST_URI} !^/filefield [NC]
-    RewriteCond %{REQUEST_URI} !^/logout [NC]
-    RewriteCond %{REQUEST_URI} !^/system [NC]
-    RewriteCond %{REQUEST_URI} !^/disclaimer [NC]
-    RewriteCond %{REQUEST_URI} !^/misc [NC]
-    RewriteCond %{REQUEST_URI} !^/user [NC]
-    RewriteCond %{REQUEST_URI} !^/xml [NC]
-    RewriteCond %{REQUEST_URI} ^/concrete [OR]
-    RewriteCond %{REQUEST_URI} ^/themes [OR]
-    RewriteCond %{REQUEST_URI} ^/packages [OR]
-    RewriteCond %{REQUEST_URI} ^/files [OR]
-    RewriteCond %{REQUEST_URI} ^/updates [OR]
-    RewriteCond %{REQUEST_URI} ^/images [OR]
-    RewriteCond %{REQUEST_URI} ^/js [OR]
-    RewriteCond %{REQUEST_URI} ^/css
-    RewriteRule ^(.*)$ /parentsite3/$1 [QSA,L]
-
-    # parentsite 2 files
-	RewriteCond %{HTTP_HOST} ^ps2.triplep-parenting.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^develop.positiefopvoeden.nl$ [OR]
-    RewriteCond %{HTTP_HOST} ^develop.triplep-usag.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^develop.triplep-paternidad.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^develop.triplep-parenting.uk.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^develop.triplep-parenting.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^develop.triplep-parenting.net.au$ [OR]
-    RewriteCond %{HTTP_HOST} ^develop.triplep-annebabalik.net$ [NC]
-    RewriteCond %{REQUEST_URI} !^/practitioners [NC]
-    RewriteCond %{REQUEST_URI} !^/admin [NC]
-    RewriteCond %{REQUEST_URI} !^/taxonomy [NC]
-    RewriteCond %{REQUEST_URI} !^/node [NC]
-    RewriteCond %{REQUEST_URI} !^/devel [NC]
-    RewriteCond %{REQUEST_URI} !^/filefield [NC]
-    RewriteCond %{REQUEST_URI} !^/logout [NC]
-    RewriteCond %{REQUEST_URI} !^/system [NC]
-    RewriteCond %{REQUEST_URI} !^/disclaimer [NC]
-    RewriteCond %{REQUEST_URI} !^/misc [NC]
-    RewriteCond %{REQUEST_URI} !^/user [NC]
-    RewriteCond %{REQUEST_URI} !^/xml [NC]
-    RewriteCond %{REQUEST_URI} ^/concrete [OR]
-    RewriteCond %{REQUEST_URI} ^/themes [OR]
-    RewriteCond %{REQUEST_URI} ^/packages [OR]
-    RewriteCond %{REQUEST_URI} ^/files [OR]
-    RewriteCond %{REQUEST_URI} ^/updates [OR]
-    RewriteCond %{REQUEST_URI} ^/images [OR]
-    RewriteCond %{REQUEST_URI} ^/js [OR]
-    RewriteCond %{REQUEST_URI} ^/css
-    RewriteRule ^(.*)$ /parentsite/$1 [QSA,L]
-
-    # parentsite 2 and 3 urls
-    RewriteCond %{HTTP_HOST} ^develop.positiefopvoeden.nl$ [OR]
-    RewriteCond %{HTTP_HOST} ^develop.triplep-usag.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^develop.triplep-paternidad.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^develop.triplep-parenting.uk.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^develop.triplep-parenting.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^ps2.triplep-parenting.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^ps3.triplep-parenting.net$ [OR]
-    RewriteCond %{HTTP_HOST} ^develop.triplep-parenting.tld$ [OR]
-    RewriteCond %{HTTP_HOST} ^develop.triplep-parenting.net.au$ [OR]
-    RewriteCond %{HTTP_HOST} ^develop.triplep-annebabalik.net$ [NC]
-    RewriteCond %{REQUEST_URI} !^/practitioners [NC]
-    RewriteCond %{REQUEST_URI} !^/admin [NC]
-    RewriteCond %{REQUEST_URI} !^/taxonomy [NC]
-    RewriteCond %{REQUEST_URI} !^/devel [NC]
-    RewriteCond %{REQUEST_URI} !^/node [NC]
-    RewriteCond %{REQUEST_URI} !^/filefield [NC]
-    RewriteCond %{REQUEST_URI} !^/logout [NC]
-    RewriteCond %{REQUEST_URI} !^/system [NC]
-    RewriteCond %{REQUEST_URI} !^/user [NC]
-    RewriteCond %{REQUEST_URI} !^/disclaimer [NC]
-    RewriteCond %{REQUEST_URI} !^/xml [NC]
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME}/index.html !-f
-    RewriteCond %{REQUEST_FILENAME}/index.php !-f
-    RewriteRule ^(.*)$ index.php/$1 [L]
-
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    # START SECTION THAT PREVENTS CRAWLER BOTS TO ACCESS ADMIN SUB DOMAINS TRIPLEP-PARENTING PS
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-
-	RewriteCond %{HTTP_HOST} ^(ps2|ps3)\.triplep-parenting\.net$
-	RewriteCond %{HTTP_USER_AGENT} ^.*(^$|008|ABACHOBot|Accoona\-AI\-Agent|AddSugarSpiderBot|AnyApexBot|Arachmo|B\-l\-i\-t\-z\-B\-O\-T|Baiduspider|BecomeBot|BeslistBot|BillyBobBot|Bimbot|Bingbot|BlitzBOT|boitho\.com\-dc|boitho\.com\-robot|btbot|CatchBot|Cerberian\ Drtrs|Charlotte|ConveraCrawler|cosmos|Covario\ IDS|DataparkSearch|DiamondBot|Discobot|Dotbot|EARTHCOM\.info|EmeraldShield\.com\ WebBot|spider|EsperanzaBot|Exabot|FAST\ Enterprise\ Crawler|FAST\-WebCrawler|FDSE\ robot|FindLinks|FurlBot|FyberSpider|g2crawler|Gaisbot|GalaxyBot|genieBot|Gigabot|Girafabot|Googlebot|Googlebot\-Image|GurujiBot|HappyFunBot|hl\_ftien\_spider|Holmes|htdig|iaskspider|ia\_archiver|iCCrawler|ichiro|igdeSpyder|IRLbot|IssueCrawler|Jaxified\ Bot|Jyxobot|KoepaBot|L\.webis|LapozzBot|Larbin|LDSpider|LexxeBot|Linguee\ Bot|LinkWalker|lmspider|lwp\-trivial|mabontland|magpie\-crawler|Mediapartners\-Google|MJ12bot|MLBot|Mnogosearch|mogimogi|MojeekBot|Moreoverbot|Morning\ Paper|msnbot|MSRBot|MVAClient|mxbot|NetResearchServer|NetSeer\ Crawler|NewsGator|NG\-Search|nicebot|noxtrumbot|Nusearch\ Spider|NutchCVS|Nymesis|obot|oegp|omgilibot|OmniExplorer\_Bot|OOZBOT|Orbiter|PageBitesHyperBot|Peew|polybot|Pompos|PostPost|Psbot|PycURL|Qseero|Radian6|RAMPyBot|RufusBot|SandCrawler|SBIder|ScoutJet|Scrubby|SearchSight|Seekbot|semanticdiscovery|Sensis\ Web\ Crawler|SEOChat\:\:Bot|SeznamBot|Shim\-Crawler|ShopWiki|Shoula\ robot|silk|Sitebot|Snappy|sogou\ spider|Sosospider|Speedy\ Spider|Sqworm|StackRambler|suggybot|SurveyBot|SynooBot|Teoma|TerrawizBot|TheSuBot|Thumbnail\.CZ\ robot|TinEye|truwoGPS|TurnitinBot|TweetedTimes\ Bot|TwengaBot|updated|Urlfilebot|Vagabondo|VoilaBot|Vortex|voyager|VYU2|webcollage|Websquash\.com|wf84|WoFindeIch\ Robot|WomlpeFactory|Xaldon\_WebSpider|yacy|Yahoo\!\ Slurp|Yahoo\!\ Slurp\ China|YahooSeeker|YahooSeeker\-Testing|YandexBot|YandexImages|YandexMetrika|Yasaklibot|Yeti|YodaoBot|yoogliFetchAgent|YoudaoBot|Zao|Zealbot|zspider|ZyBorg).*$ [NC]
-	RewriteCond %{REQUEST_URI} !^\/robots\.txt$
-	RewriteRule .* - [F]
-
-	RewriteCond %{HTTP_HOST} ^(ps2|ps3)\.triplep-parenting\.net$
-	RewriteRule ^robots\.txt$ robots-subdomain-login.txt
+	### 2013-06-25 JH
+	RewriteCond %{HTTP_HOST} ^balcova.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^\/$
+	RewriteRule ^(.*)$ http://balcova.triplep-staypositive.net/practitioners/provider [L]
+
+	### 2013-11-20 JH
+	RewriteCond %{HTTP_HOST} ^north-carolina.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^\/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/provider/ [L]
+
+	RewriteCond %{HTTP_HOST} ^gra-en.triplep-usag.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^\/$ [NC]
+	RewriteRule ^(.*)$ http://gra-en.triplep-staypositive.net/practitioners/provider [L]
+
+	RewriteCond %{HTTP_HOST} ^gra-en.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^\/$ [NC]
+	RewriteRule ^(.*)$ http://gra-en.triplep-staypositive.net/practitioners/provider [L]
+
+
+	##############################################################################
+	# START 301 SECTION > REWRITE RULES FOR OPEN PRACTITIONER
+	##############################################################################
+	 RewriteCond %{HTTP_HOST} ^gra-en.triplep-staypositive.net$ [OR]
+	 RewriteCond %{HTTP_HOST} ^balcova.triplep-staypositive.net$ [OR]
+	 RewriteCond %{HTTP_HOST} ^longford-westmeath.triplep-staypositive.net$ [OR]
+	 RewriteCond %{HTTP_HOST} ^new-zealand.triplep-staypositive.net$ [NC]
+	 RewriteCond %{REQUEST_URI} ^/practitioners/$ [OR]
+	 RewriteCond %{REQUEST_URI} ^/practitioners/news/$ [OR]
+	 RewriteCond %{REQUEST_URI} ^/practitioners/contact/$ [OR]
+	 RewriteCond %{REQUEST_URI} ^/practitioners/about-triple-p/(.*)$ [OR]
+	 RewriteCond %{REQUEST_URI} ^/practitioners/delivering-triplep/(.*)$ [OR]
+	 RewriteCond %{REQUEST_URI} ^/practitioners/about-us/(.*)$ [OR]
+	 RewriteCond %{REQUEST_URI} ^/practitioners/faq/(.*)$ [OR]
+	 RewriteCond %{REQUEST_URI} ^/practitioners/links/(.*)$ [OR]
+	 RewriteCond %{REQUEST_URI} ^/practitioners/find-a-session/(.*)$
+	 RewriteRule ^(.*)$ /practitioners/login/ [R=301,L,NC]
+
+
+	##############################################################################
+	# START 301 SECTION > REWRITE RULES FOR PROVIDER LOGIN URLS THAT ARE NOT CONSIDERED VALID
+	##############################################################################
+	RewriteCond %{HTTP_HOST} !^gra-en.triplep-staypositive.net$ [NC]
+	RewriteCond %{HTTP_HOST} !^balcova.triplep-staypositive.net$ [NC]
+	RewriteCond %{HTTP_HOST} !^longford-westmeath.triplep-staypositive.net$ [NC]
+	RewriteCond %{HTTP_HOST} !^glasgow.triplep-staypositive.net$ [NC]
+	RewriteCond %{HTTP_HOST} !^new-zealand.triplep-staypositive.net$ [NC]
+	RewriteCond %{HTTP_HOST} !^au-en.triplep-steppingstones.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/login
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/provider/provider_login/ [R=301,L,NC]
+
+
+	##############################################################################
+	# REWRITE TRIPLEP-PARENTING.NET/GLA-UKEN TO GLASGOW.TRIPLEP-STAYPOSITIVE.NET
+	# INSTANCE TARGETTING SUPPORT FOR GLASGOW THROUGH TRIPLEP_PARENTING. AN INSTANCE
+	# RECORD IS CREATED IN PS2_BBCMS_INSTANCES AND APOINTED AS PREFERED INSTANCE
+	##############################################################################
+	RewriteCond %{HTTP_HOST} ^www\.triplep-parenting\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/gla-uken
+	RewriteRule ^(.*)$ http://glasgow.triplep-staypositive.net/ [R=301,L]
+
+
+
+	##############################################################################
+	# START 301 SECTION FOR ALBERTA PSv1.0 -> PSv2.0
+	##############################################################################
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/home/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/home/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/about-us/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/about-triple-p/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/about-us/about-professor-matt-sanders/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/triple-p/about-us/awards/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/about-triple-p/professor-matt-sanders/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/about-us/triple-p-today/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/about-triple-p/triple-p-today/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/about-us/where-it-began/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/about-triple-p/where-it-began/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/proven-to-work/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/about-triple-p/the-evidence/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/what-can-it-do/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/triple-p/positive-parenting-program/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/what-is-it/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/triple-p [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/what-parents-say/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/triple-p/what-parents-say/get-help/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/triple-p/what-do-parents-say/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/what-the-experts-say/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/triple-p/what-do-the-experts-say/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/basic-principles/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/positive-parenting/five-steps-to-positive-parenting/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/problems-solved/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/problems-solved/(.*)/$ [NC]
+	RewriteCond %{REQUEST_URI} !^/tips/problems-solved/local-stories/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/triple-p/what-do-parents-say/read-what-other-parents-say-around-the-world/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/problems-solved/local-stories/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/triple-p/what-do-parents-say/read-what-other-parents-say-in-alberta/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/basic-principles-teen/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles-teen/assertive-discipline/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles-teen/positive-learning-environment/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles-teen/realistic-expectations\ /$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles-teen/realistic-expectations/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles-teen/safe-and-interesting-environment-teen/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles-teen/taking-care-of-yourself/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/positive-parenting/five-steps-to-positive-parenting-teenagers/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles/assertive-discipline/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/positive-parenting/use-assertive-discipline/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles/positive-learning-environment/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/positive-parenting/have-a-positive-learning-environment/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles/realistic-expectations\ /$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles/realistic-expectations/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/positive-parenting/have-realistic-expectations/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles/safe-and-interesting-environment/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/positive-parenting/create-a-safe-interesting-environment/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles/taking-care-of-yourself/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/positive-parenting/take-care-of-yourself/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/ask-professor-sanders/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/enjoy-parenting-more/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/overview/General-[pP]arenting-Tips/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/overview/Infant-[tT]ips/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/overview/Primary-School-Children-Tips/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/overview/Teenager-Tips/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/overview/Toddler-and-[pP]reschool-Tips/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/positive-parenting/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/get-help/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/find-a-session/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/get-help/find-a-session/(.*)$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/get-help/find-a-triple-p-session/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/frequently-asked-questions/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/triple-p/frequently-asked-questions/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/advice-sessions/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/detailed%20support/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/short-sessions/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/get-help/which-triple-p-is-right-for-me/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/advice-sessions/primary-care/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/get-help/which-triple-p-is-right-for-me/level-3-primary-care-triple-p-for-everyday-problems/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/advice-sessions/primary-care-teen/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/get-help/which-teen-triple-p-is-right-for-me/level-3-primary-care-teen-triple-p-for-everyday-problems-with-your-teenager/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/courses/enhanced/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/get-help/which-triple-p-is-right-for-me/level-5-enhanced-triple-p-for-more-serious-family-problems/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/courses/group/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/get-help/which-triple-p-is-right-for-me/level-4-group-triple-p-all-you-want-to-know/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/courses/group-teen/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/get-help/which-teen-triple-p-is-right-for-me/level-4-group-teen-triple-p-all-you-want-to-know-about-parenting-teens/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/courses/pathways/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/get-help/which-triple-p-is-right-for-me/level-5-pathways-triple-p-keeping-families-together/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/courses/standard/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/get-help/which-triple-p-is-right-for-me/level-4-standard-triple-p-for-more-serious-behavior-problems/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/courses/standard-teen/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/get-help/which-teen-triple-p-is-right-for-me/level-4-standard-teen-triple-p-for-more-serious-behavior-problems-with-your-teenager/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/courses/stepping-stones/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/get-help/which-triple-p-is-right-for-me/stepping-stones-triple-p-for-parents-of-a-child-with-a-special-need/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/short-sessions/short-seminars/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/get-help/which-triple-p-is-right-for-me/level-2-seminar-triple-p-positive-parenting-in-a-nutshell/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/short-sessions/short-seminars-teen/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/get-help/which-teen-triple-p-is-right-for-me/level-2-seminar-teen-triple-p-positive-parenting-of-teens-in-a-nutshell/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-in-your-area/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-in-your-area/(.*)/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/contact/all-addresses/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/get-help/find-a-triple-p-provider/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/news/local-news/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/news/worldnews/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/news/television/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/news/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/news/triple-p-papers/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/positive-parenting/triple-p-tippapers-alberta [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/news/triple-p-podcasts/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/positive-parenting/triple-p-podcasts/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/contact/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/contact/(.*)/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/contact/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/disclaimer/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/disclaimer/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/disclaimer/copyright/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/copyright/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/disclaimer/privacy/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/privacy-policy/ [R=301,L]
+
+
+
+	##############################################################################
+	# START 301 SECTION ALBERTA OPEN PROVIDER SITE V2 -> TRIPLEP.NET
+	##############################################################################
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/localadmin/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/login/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/localadmin/login.php$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/login/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/provider/provider_login/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/provider/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/provider/provider_login/ [R=301,L]
+
+	#RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	#RewriteCond %{REQUEST_URI} ^/practitioners/provider/mypage$
+	#RewriteRule ^(.*)$ http://www.triplep-parenting.net/provider/provider_login/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/about-triple-p/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/find-out-about-triple-p/triple-p-in-a-nutshell/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/about-triple-p/what-is-triplep/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/find-out-about-triple-p/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/about-triple-p/aims/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/find-out-about-triple-p/triple-p-in-a-nutshell/aims/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/about-triple-p/levels-and-courses/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/the-triple-p-system-at-work/the-system-explained/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/about-triple-p/proven-to-work/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/the-triple-p-system-at-work/evidence-based/key-research-findings/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/about-triple-p/what-the-experts-say/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/the-triple-p-system-at-work/evidence-based/what-the-experts-say/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/about-triple-p/what-parents-say/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/find-out-about-triple-p/changing-lives/read-what-parents-say/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/delivering-triplep/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/getting-started-with-triple-p/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/delivering-triplep/resources/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/the-triple-p-system-at-work/training-and-delivery/resources/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/delivering-triple-p/referrals/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/getting-started-with-triple-p/train-your-staff-population-approach/the-triple-p-system-table/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/delivering-triplep/becoming-a-triplep-practitioner/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/getting-started-with-triple-p/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/delivering-triplep/the-triplep-system/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/the-triple-p-system-at-work/the-system-explained/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/about-us/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/contact/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/about-us/local-about-us/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/contact/local-contacts/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/about-us/about-professor-matt-sanders/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/behind-the-scenes/professor-matt-sanders/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/faq/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/triple-p-at-a-glance/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/links/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/contact/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/find-a-session/home/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/get-help/find-a-triple-p-session/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/news/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/practitioners/news/worldnews/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/news/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/news/podcasts/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/alb-en/positive-parenting/triple-p-podcasts/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/news/television/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/find-out-about-triple-p/changing-lives/driving-mum-and-dad-mad/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/contact/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/contact/local-contacts/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/contact/form/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/contact/ [R=301,L]
+
+
+
+	##############################################################################
+	# START 301 SECTION SONOMA COUNTY PSv2 STAY POSITIVE -> PARENTING
+	# 20140813 JB - INTENTIALLY APPLIED COMPARISON BASED ON EXCLUDING INSTANCE URL
+	# BB PRACTISE IS TO AVOID THESE TYPES OF LOGIC, YET WHEN APPLIED
+	# OTHERWISE /son-en/ CONTINUED TO BE REDIRECTED TO /son-en/son-en/
+	##############################################################################
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/$ [NC]
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/son-en/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/(.*)$ [NC]
+	RewriteCond %{REQUEST_URI} !^/son-es/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/$1 [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/(.*)$ [NC]
+	RewriteCond %{REQUEST_URI} !^/son-en/$
+	RewriteRule ^(.*)$ http://www.triplep-paternidad.net/$1 [R=301,L]
+
+
+
+	##############################################################################
+	# START 301 SECTION SONOMA COUNTY OPEN PROVIDER SITE V2 -> TRIPLEP.NET
+	##############################################################################
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/localadmin/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/login/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/localadmin/login.php$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/login/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/home/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/about-triple-p/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/find-out-about-triple-p/triple-p-in-a-nutshell/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/about-triple-p/what-is-triplep/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/find-out-about-triple-p/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/about-triple-p/aims/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/find-out-about-triple-p/triple-p-in-a-nutshell/aims/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/about-triple-p/levels-and-courses/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/the-triple-p-system-at-work/the-system-explained/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/about-triple-p/proven-to-work/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/the-triple-p-system-at-work/evidence-based/key-research-findings/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/about-triple-p/what-the-experts-say/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/the-triple-p-system-at-work/evidence-based/what-the-experts-say/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/about-triple-p/what-parents-say/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/find-out-about-triple-p/changing-lives/read-what-parents-say/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/delivering-triplep/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/getting-started-with-triple-p/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/delivering-triplep/resources/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/the-triple-p-system-at-work/training-and-delivery/resources/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/delivering-triple-p/referrals/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/getting-started-with-triple-p/train-your-staff-population-approach/the-triple-p-system-table/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/delivering-triplep/becoming-a-triplep-practitioner/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/getting-started-with-triple-p/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/delivering-triplep/the-triplep-system/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/the-triple-p-system-at-work/the-system-explained/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/about-us/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/contact/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/about-us/local-about-us/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/contact/local-contacts/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/about-us/about-professor-matt-sanders/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/behind-the-scenes/professor-matt-sanders/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/faq/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/triple-p-at-a-glance/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/links/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/contact/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/find-a-session/home/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/son-en/get-help/find-a-triple-p-session/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/news/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/son-en/news/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/news/worldnews/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/find-out-about-triple-p/news/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/news/podcasts/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/son-en/positive-parenting/triple-p-podcasts/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/news/television/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/find-out-about-triple-p/changing-lives/driving-mum-and-dad-mad/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/contact/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/contact/local-contacts/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/contact/form/$
+	RewriteRule ^(.*)$ http://triplep.net/glo-en/contact/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^sonoma-county.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/practitioners/search/
+	RewriteRule ^(.*)$ http://www.triplep.net/glo-en/search/ [R=301,L]
+
+
+
+	##############################################################################
+	# START 301 SECTION longford-westmeath PSv1.0 -> PSv2.0
+	##############################################################################
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/home [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/home/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/home [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/about-us/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/about-triple-p/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/about-us/about-professor-matt-sanders/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/triple-p/about-us/awards/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/about-triple-p/professor-matt-sanders/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/about-us/triple-p-today/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/about-triple-p/triple-p-today/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/about-us/where-it-began/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/about-triple-p/where-it-began/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/proven-to-work/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/about-triple-p/the-evidence/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/what-can-it-do/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/triple-p/positive-parenting-program/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/what-is-it/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/triple-p [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/what-parents-say/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/triple-p/what-parents-say/get-help/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/triple-p/what-do-parents-say/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/what-the-experts-say/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/triple-p/what-do-the-experts-say/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/basic-principles/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/positive-parenting/five-steps-to-positive-parenting/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/problems-solved/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/problems-solved/(.*)/$ [NC]
+	RewriteCond %{REQUEST_URI} !^/tips/problems-solved/local-stories/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/triple-p/what-do-parents-say/read-what-other-parents-say-around-the-world/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/problems-solved/local-stories/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/triple-p/what-do-parents-say/read-what-other-parents-say-in-the-midlands/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/basic-principles-teen/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles-teen/assertive-discipline/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles-teen/positive-learning-environment/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles-teen/realistic-expectations\ /$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles-teen/realistic-expectations/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles-teen/safe-and-interesting-environment-teen/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles-teen/taking-care-of-yourself/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/positive-parenting/five-steps-to-positive-parenting-teenagers/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles/assertive-discipline/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/positive-parenting/use-assertive-discipline/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles/positive-learning-environment/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/positive-parenting/have-a-positive-learning-environment/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles/realistic-expectations\ /$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles/realistic-expectations/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/positive-parenting/have-realistic-expectations/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles/safe-and-interesting-environment/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/positive-parenting/create-a-safe-interesting-environment/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles/taking-care-of-yourself/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/positive-parenting/take-care-of-yourself/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/ask-professor-sanders/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/enjoy-parenting-more/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/overview/General-[pP]arenting-Tips/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/overview/Infant-[tT]ips/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/overview/Primary-School-Children-Tips/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/overview/Teenager-Tips/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/overview/Toddler-and-[pP]reschool-Tips/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/positive-parenting/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/get-help/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/find-a-session/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/get-help/find-a-session/(.*)$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/get-help/find-a-triple-p-session/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/frequently-asked-questions/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/triple-p/frequently-asked-questions/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/courses/stepping-stones/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/courses/standard/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/detailed\ support/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/short-sessions/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/advice-sessions/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/get-help/which-triple-p-is-right-for-me/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/courses/enhanced/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/get-help/which-triple-p-is-right-for-me/level-5-enhanced-triple-p-for-more-serious-family-problems/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/courses/group/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/get-help/which-triple-p-is-right-for-me/level-4-group-triple-p-all-you-want-to-know/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/courses/pathways/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/get-help/which-triple-p-is-right-for-me/level-5-pathways-triple-p-keeping-families-together/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/short-sessions/short-seminars/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/get-help/which-triple-p-is-right-for-me/level-2-seminar-triple-p-positive-parenting-in-a-nutshell/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-in-your-area/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-in-your-area/(.*)/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/contact/all-addresses/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/get-help/find-a-triple-p-provider/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/news/local-news/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/news/television/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/news/worldnews/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/news/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/news/triple-p-papers/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/positive-parenting/triple-p-tippapers-midlands/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/news/triple-p-podcasts/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/positive-parenting/triple-p-podcasts/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/contact/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/contact/(.*)/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/contact/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/disclaimer/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/disclaimer/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/disclaimer/copyright/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/copyright/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^longford-westmeath\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/disclaimer/privacy/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/lwlo-uken/privacy-policy [R=301,L]
+
+
+
+	##############################################################################
+	# START 301 SECTION NEW-ZEALAND PSv1.0 -> PSv2.0
+	##############################################################################
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/home [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/home/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/home [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/about-us/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/about-triple-p/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/about-us/about-professor-matt-sanders/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/triple-p/about-us/awards/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/about-triple-p/professor-matt-sanders/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/about-us/triple-p-today/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/about-triple-p/triple-p-today/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/about-us/where-it-began/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/about-triple-p/where-it-began/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/proven-to-work/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/about-triple-p/the-evidence/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/what-can-it-do/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/triple-p/positive-parenting-program/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/what-is-it/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/triple-p [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/what-parents-say/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/triple-p/what-parents-say/get-help/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/triple-p/what-do-parents-say/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/triple-p/what-the-experts-say/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/triple-p/what-do-the-experts-say/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/basic-principles/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/positive-parenting/five-steps-to-positive-parenting/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/problems-solved/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/problems-solved/(.*)/$ [NC]
+	RewriteCond %{REQUEST_URI} !^/tips/problems-solved/local-stories/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/triple-p/what-do-parents-say/read-what-other-parents-say-around-the-world/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/problems-solved/local-stories/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/triple-p/what-do-parents-say/read-what-other-parents-say-in-new-zealand/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles/assertive-discipline/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/positive-parenting/use-assertive-discipline/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles/positive-learning-environment/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/positive-parenting/have-a-positive-learning-environment/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles/realistic-expectations\ /$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles/realistic-expectations/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/positive-parenting/have-realistic-expectations/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles/safe-and-interesting-environment/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/positive-parenting/create-a-safe-interesting-environment/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/basic-principles/taking-care-of-yourself/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/positive-parenting/take-care-of-yourself/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/ask-professor-sanders/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/enjoy-parenting-more/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/overview/General-[pP]arenting-Tips/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/overview/Infant-[tT]ips/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/overview/Primary-School-Children-Tips/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/overview/Teenager-Tips/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/tips/tips/overview/Toddler-and-[pP]reschool-Tips/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/positive-parenting/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/get-help/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/find-a-session/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/get-help/find-a-session/(.*)$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/get-help/find-a-triple-p-session/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/frequently-asked-questions/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/triple-p/frequently-asked-questions/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/short-sessions/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/get-help/which-triple-p-is-right-for-me/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-choices/short-sessions/short-seminars/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/get-help/which-triple-p-is-right-for-me/level-2-seminar-triple-p-positive-parenting-in-a-nutshell/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-in-your-area/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/get-help/triple-p-in-your-area/(.*)/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/contact/all-addresses/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/get-help/find-a-triple-p-provider/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/news/local-news/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/news/television/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/news/worldnews/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/news/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/news/triple-p-papers/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/positive-parenting/triple-p-tippapers-new-zealand/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/news/triple-p-podcasts/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/positive-parenting/triple-p-podcasts/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/contact/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/contact/(.*)/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/contact/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/disclaimer/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/disclaimer/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/disclaimer/copyright/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/copyright/ [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-staypositive\.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/disclaimer/privacy/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/nz-uken/privacy-policy [R=301,L]
+
+
+
+	##########################################################################
+	# START 301 SECTION positiefopvoeden.nl/ admin and beroepskracht to .net #
+	##########################################################################
+	RewriteCond %{HTTP_HOST} ^positiefopvoeden\.nl$ [OR]
+	RewriteCond %{HTTP_HOST} ^www\.positiefopvoeden\.nl$ [NC]
+	RewriteCond %{REQUEST_URI} ^/admin [OR]
+	RewriteCond %{REQUEST_URI} ^/localadmin [OR]
+	RewriteCond %{REQUEST_URI} ^/beroepskracht [OR]
+	RewriteCond %{REQUEST_URI} ^/onlineadvies [OR]
+	RewriteCond %{REQUEST_URI} ^/tools
+	RewriteRule ^(.*)$ http://www.positiefopvoeden.net/$1 [QSA,L,R=301]
+
+
+
+	##############################################################################
+	# START 301 SECTION positiefopvoeden.nl PS V1.0 -> V2.0
+	##############################################################################
+	RewriteCond %{HTTP_HOST} ^positiefopvoeden\.nl$ [OR]
+	RewriteCond %{HTTP_HOST} ^www\.positiefopvoeden\.nl$ [NC]
+	RewriteCond %{REQUEST_URI} ^/home [OR]
+	RewriteCond %{REQUEST_URI} ^/tipsenhulp [OR]
+	RewriteCond %{REQUEST_URI} ^/triplep [OR]
+	RewriteCond %{REQUEST_URI} ^/positiefopvoeden [OR]
+	RewriteCond %{REQUEST_URI} ^/welkom [OR]
+	RewriteCond %{REQUEST_URI} ^/agendaennieuws [OR]
+	RewriteCond %{REQUEST_URI} ^/lerenluisteren [OR]
+	RewriteCond %{REQUEST_URI} ^/algemeen [OR]
+	RewriteCond %{REQUEST_URI} ^/regiokeuze [OR]
+	RewriteCond %{REQUEST_URI} ^/talen(.*) [OR]
+	RewriteCond %{REQUEST_URI} ^/nieuwsenagenda [OR]
+	RewriteCond %{REQUEST_URI} ^/nieuwsenagenda(.*) [OR]
+	RewriteCond %{REQUEST_URI} ^/agenda [OR]
+	RewriteCond %{REQUEST_URI} ^/contact
+	RewriteRule ^(.*)$ http://www.positiefopvoeden.nl/ [L,R=301]
+
+
+ ##############################################################################
+	# START 301 SECTION positiefopvoeden.nl PS V2.0 /AGENDA/
+	##############################################################################
+	RewriteCond %{HTTP_HOST} ^www\.positiefopvoeden\.nl$ [NC]
+	RewriteCond %{REQUEST_URI} ^(.*)agenda
+	RewriteRule ^(.*)agenda(.*)$ http://www.positiefopvoeden.nl/$1advies-en-hulp/vind-een-positief-opvoeden-sessie$2 [QSA,L,R=301]
+
+
+
+	##############################################################################
+	# START 301 SECTION positiefopvoeden.nl SPOW CAMPAIGN SECTION
+	##############################################################################
+	RewriteCond %{HTTP_HOST} ^www.positiefopvoeden.nl$
+	RewriteCond %{REQUEST_URI} ^/samenwerkt/$
+	RewriteRule ^(.*)$ http://www.positiefopvoeden.nl/ge-nl/advies-en-hulp/voor-vrijwilligers-workshop-samen-positief-opvoeden-werkt/ [QSA,L,R=301]
+
+
+	##############################################################################
+	# START 301 SECTION www.triplep-parenting.uk.net TPOL CAMPAIGN SECTION
+	##############################################################################
+	RewriteCond %{HTTP_HOST} ^www.triplep-parenting.uk.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/online/$
+	RewriteRule ^(.*)online/(.*)$ http://www.triplep-parenting.uk.net/$1uk-en/get-help/which-triple-p-is-right-for-me/triple-p-online-your-personal-parenting-programme-247/?itb=dfc69ee4c48a622e2bcda2c3d2a219d0$2 [QSA,L,R=301]
+
+	RewriteCond %{HTTP_HOST} ^www.triplep-parenting.uk.net$
+	RewriteCond %{QUERY_STRING} !dfc69ee4c48a622e2bcda2c3d2a219d0
+	RewriteCond %{REQUEST_URI} ^/uk-en/get-help/which-triple-p-is-right-for-me/triple-p-online-your-personal-parenting-programme-247/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.uk.net/uk-en/get-help/which-triple-p-is-right-for-me/triple-p-online-your-personal-parenting-programme-247/?itb=dfc69ee4c48a622e2bcda2c3d2a219d0 [QSA,L,R=301]
+
+	##############################################################################
+	# START 301 SECTION www.triplep-parenting.net.au TPOL CAMPAIGN SECTION
+	##############################################################################
+	RewriteCond %{HTTP_HOST} ^www.triplep-parenting.net.au$
+	RewriteCond %{REQUEST_URI} ^/online/$
+	RewriteRule ^(.*)online/(.*)$ http://www.triplep-parenting.net.au/$1au-uken/get-help/which-triple-p-is-right-for-me/triple-p-online-your-personal-parenting-program-247/?itb=ca91c5464e73d3066825362c3093a45f$2 [QSA,L,R=301]
+
+	RewriteCond %{HTTP_HOST} ^www.triplep-parenting.net.au$
+	RewriteCond %{QUERY_STRING} !ca91c5464e73d3066825362c3093a45f
+	RewriteCond %{REQUEST_URI} ^/au-uken/get-help/which-triple-p-is-right-for-me/triple-p-online-your-personal-parenting-program-247/$
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net.au/au-uken/get-help/which-triple-p-is-right-for-me/triple-p-online-your-personal-parenting-program-247/?itb=ca91c5464e73d3066825362c3093a45f [QSA,L,R=301]
+
+
+	##############################################################################
+	# START 301 SECTION positiefopvoeden.nl FT -> Gescheiden ouders
+	##############################################################################
+	RewriteCond %{HTTP_HOST} ^www.positiefopvoeden.nl$
+	RewriteCond %{REQUEST_URI} ^(.*)cursus-family-transitions(.*)$
+	RewriteRule ^(.*)cursus-family-transitions(.*)$ http://www.positiefopvoeden.nl/$1cursus-positief-opvoeden-voor-gescheiden-ouders$2 [QSA,L,R=301]
+
+
+
+	##############################################################################
+	# START 301 SECTION  TRIPLEP-STAYPOSITIVE.NL > TRIPLEP-PARENTING.NET
+	##############################################################################
+	RewriteCond %{HTTP_HOST} ^triplep-staypositive\.nl$ [OR]
+	RewriteCond %{HTTP_HOST} ^www\.triplep-staypositive\.nl$ [NC]
+	RewriteRule ^(.*)$ http://www.triplep-parenting.net/ [L,R=301]
+
+
+
+ ##############################################################################
+	# START 301 SECTION > REWRITE RULES FOR URLS THAT ARE NOT CONSIDERED VALID
+	# TODO: CHANGE REWRITECOND TO CHECK FOR THE EXCEPTION
+	##############################################################################
+	RewriteCond %{HTTP_HOST} ^new-zealand\.triplep-steppingstones\.net$ [OR]
+	RewriteCond %{HTTP_HOST} ^www.new-zealand\.triplep-steppingstones\.net$ [OR]
+	RewriteCond %{HTTP_HOST} ^gra-en\.triplep-steppingstones\.net$ [OR]
+	RewriteCond %{HTTP_HOST} ^www\.gra-en\.triplep-steppingstones\.net$ [OR]
+	RewriteCond %{HTTP_HOST} ^glasgow\.triplep-steppingstones\.net$ [OR]
+	RewriteCond %{HTTP_HOST} ^www\.glasgow.triplep-steppingstones\.net$ [OR]
+	RewriteCond %{HTTP_HOST} ^balcova\.triplep-steppingstones\.net$ [OR]
+	RewriteCond %{HTTP_HOST} ^www\.balcova.triplep-steppingstones\.net$ [OR]
+	RewriteCond %{HTTP_HOST} ^chile\.triplep-steppingstones\.net$ [OR]
+	RewriteCond %{HTTP_HOST} ^www\.chile.triplep-steppingstones\.net$ [OR]
+	RewriteCond %{HTTP_HOST} ^alberta\.triplep-steppingstones\.net$ [OR]
+	RewriteCond %{HTTP_HOST} ^www\.alberta.triplep-steppingstones\.net$ [OR]
+	RewriteCond %{HTTP_HOST} ^sonoma-county\.triplep-steppingstones\.net$
+	RewriteRule ^(.*)$ http://www.triplep-steppingstones.net/ [R=301,L,NC]
+
+	RewriteCond %{HTTP_HOST} ^au-en.triplep-staypositive.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^/$ [OR]
+	RewriteCond %{REQUEST_URI} ^/practitioners/$
+	RewriteRule ^(.*)$ http://au-en.triplep-steppingstones.net/practitioners/login/ [R=301,L]
+
+
+
+	##############################################################################
+	# START 301 SECTION TRIPLEP-STEPPINGSTONES SSTP PS V1
+	##############################################################################
+	RewriteCond %{HTTP_HOST} ^triplep-steppingstones.net$ [OR]
+	RewriteCond %{HTTP_HOST} ^au-en.triplep-steppingstones.net$ [NC]
+	RewriteCond %{REQUEST_URI} ^\/$ [NC]
+	RewriteRule ^(.*)$ http://www.triplep-steppingstones.net/ [L]
+
+	# stepping stones files
+	RewriteCond %{HTTP_HOST} ^develop.triplep-steppingstones.net$ [NC]
+	RewriteCond %{REQUEST_URI} !^/practitioners [NC]
+	RewriteCond %{REQUEST_URI} !^/admin [NC]
+	RewriteCond %{REQUEST_URI} !^/taxonomy [NC]
+	RewriteCond %{REQUEST_URI} !^/node [NC]
+	RewriteCond %{REQUEST_URI} !^/devel [NC]
+	RewriteCond %{REQUEST_URI} !^/filefield [NC]
+	RewriteCond %{REQUEST_URI} !^/logout [NC]
+	RewriteCond %{REQUEST_URI} !^/system [NC]
+	RewriteCond %{REQUEST_URI} !^/disclaimer [NC]
+	RewriteCond %{REQUEST_URI} !^/misc [NC]
+	RewriteCond %{REQUEST_URI} !^/user [NC]
+	RewriteCond %{REQUEST_URI} ^/concrete [OR]
+	RewriteCond %{REQUEST_URI} ^/themes [OR]
+	RewriteCond %{REQUEST_URI} ^/packages [OR]
+	RewriteCond %{REQUEST_URI} ^/files [OR]
+	RewriteCond %{REQUEST_URI} ^/updates [OR]
+	RewriteCond %{REQUEST_URI} ^/images [OR]
+	RewriteCond %{REQUEST_URI} ^/js [OR]
+	RewriteCond %{REQUEST_URI} ^/css
+	RewriteRule ^(.*)$ /steppingstones/$1 [QSA,L]
+
+	# stepping stones urls
+	RewriteCond %{HTTP_HOST} ^develop.triplep-steppingstones.net$ [NC]
+	RewriteCond %{REQUEST_URI} !^/practitioners [NC]
+	RewriteCond %{REQUEST_URI} !^/admin [NC]
+	RewriteCond %{REQUEST_URI} !^/taxonomy [NC]
+	RewriteCond %{REQUEST_URI} !^/devel [NC]
+	RewriteCond %{REQUEST_URI} !^/node [NC]
+	RewriteCond %{REQUEST_URI} !^/filefield [NC]
+	RewriteCond %{REQUEST_URI} !^/logout [NC]
+	RewriteCond %{REQUEST_URI} !^/system [NC]
+	RewriteCond %{REQUEST_URI} !^/user [NC]
+	RewriteCond %{REQUEST_URI} !^/disclaimer [NC]
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME}/index.html !-f
+	RewriteCond %{REQUEST_FILENAME}/index.php !-f
+	RewriteRule ^(.*)$ index.php/$1 [L]
+
+	##############################################################################
+	# START 301 SECTION TRIPLEP-PARENTING PS V3
+	##############################################################################
+	# PARENTSITE 3 FILES
+	RewriteCond %{REQUEST_URI} ^/themes/parentsite3
+	RewriteRule ^(.*)$ /parentsite3/$1 [QSA,L]
+
+	RewriteCond %{HTTP_HOST} ^develop.parentsite3.triplep-parenting.net$ [OR]
+	RewriteCond %{HTTP_HOST} ^parentsite3.triplep-parenting.net$ [OR]
+	RewriteCond %{HTTP_HOST} ^develop.triplep-parenting.tld$ [NC]
+	RewriteCond %{REQUEST_URI} ^/concrete [OR]
+	RewriteCond %{REQUEST_URI} ^/themes [OR]
+	RewriteCond %{REQUEST_URI} ^/packages [OR]
+	RewriteCond %{REQUEST_URI} ^/files [OR]
+	RewriteCond %{REQUEST_URI} ^/updates [OR]
+	RewriteCond %{REQUEST_URI} ^/images [OR]
+	RewriteCond %{REQUEST_URI} ^/js [OR]
+	RewriteCond %{REQUEST_URI} ^/css
+	RewriteRule ^(.*)$ /parentsite3/$1 [QSA,L]
+
+	##############################################################################
+	# START 301 SECTION TRIPLEP-PARENTING PS V2
+	##############################################################################
+	# PARENTSITE FILES
+	RewriteCond %{HTTP_HOST} ^develop.positiefopvoeden.nl$ [OR]
+	RewriteCond %{HTTP_HOST} ^develop.triplep-eltern.de$ [OR]
+	RewriteCond %{HTTP_HOST} ^develop.triplep-parenting.net$ [OR]
+	RewriteCond %{HTTP_HOST} ^develop.triplep-parenting.net.au$ [OR]
+	RewriteCond %{HTTP_HOST} ^develop.triplep-parenting.uk.net$ [OR]
+	RewriteCond %{HTTP_HOST} ^develop.triplep-paternidad.net$ [OR]
+	RewriteCond %{HTTP_HOST} ^develop.triplep-usag.net$ [OR]
+	RewriteCond %{HTTP_HOST} ^develop.triplep-annebabalik.net$ [NC]
+	RewriteCond %{REQUEST_URI} !^/practitioners [NC]
+	RewriteCond %{REQUEST_URI} !^/admin [NC]
+	RewriteCond %{REQUEST_URI} !^/taxonomy [NC]
+	RewriteCond %{REQUEST_URI} !^/node [NC]
+	RewriteCond %{REQUEST_URI} !^/devel [NC]
+	RewriteCond %{REQUEST_URI} !^/filefield [NC]
+	RewriteCond %{REQUEST_URI} !^/logout [NC]
+	RewriteCond %{REQUEST_URI} !^/system [NC]
+	RewriteCond %{REQUEST_URI} !^/disclaimer [NC]
+	RewriteCond %{REQUEST_URI} !^/misc [NC]
+	RewriteCond %{REQUEST_URI} !^/user [NC]
+	RewriteCond %{REQUEST_URI} !^/xml [NC]
+	RewriteCond %{REQUEST_URI} ^/concrete [OR]
+	RewriteCond %{REQUEST_URI} ^/themes [OR]
+	RewriteCond %{REQUEST_URI} ^/packages [OR]
+	RewriteCond %{REQUEST_URI} ^/files [OR]
+	RewriteCond %{REQUEST_URI} ^/updates [OR]
+	RewriteCond %{REQUEST_URI} ^/images [OR]
+	RewriteCond %{REQUEST_URI} ^/js [OR]
+	RewriteCond %{REQUEST_URI} ^/css
+	RewriteRule ^(.*)$ /parentsite/$1 [QSA,L]
+
+	# PARENTSITE URLS
+	RewriteCond %{HTTP_HOST} ^develop.positiefopvoeden.nl$ [OR]
+	RewriteCond %{HTTP_HOST} ^develop.triplep-eltern.de$ [OR]
+	RewriteCond %{HTTP_HOST} ^develop.triplep-parenting.net$ [OR]
+	RewriteCond %{HTTP_HOST} ^parentsite3.triplep-parenting.net$ [OR]
+	RewriteCond %{HTTP_HOST} ^develop.triplep-parenting.tld$ [OR]
+	RewriteCond %{HTTP_HOST} ^develop.triplep-parenting.net.au$ [OR]
+	RewriteCond %{HTTP_HOST} ^develop.triplep-parenting.uk.net$ [OR]
+	RewriteCond %{HTTP_HOST} ^develop.triplep-paternidad.net$ [OR]
+	RewriteCond %{HTTP_HOST} ^develop.triplep-usag.net$ [OR]
+	RewriteCond %{HTTP_HOST} ^develop.triplep-annebabalik.net$ [NC]
+	RewriteCond %{REQUEST_URI} !^/practitioners [NC]
+	RewriteCond %{REQUEST_URI} !^/admin [NC]
+	RewriteCond %{REQUEST_URI} !^/taxonomy [NC]
+	RewriteCond %{REQUEST_URI} !^/devel [NC]
+	RewriteCond %{REQUEST_URI} !^/node [NC]
+	RewriteCond %{REQUEST_URI} !^/filefield [NC]
+	RewriteCond %{REQUEST_URI} !^/logout [NC]
+	RewriteCond %{REQUEST_URI} !^/system [NC]
+	RewriteCond %{REQUEST_URI} !^/user [NC]
+	RewriteCond %{REQUEST_URI} !^/disclaimer [NC]
+	RewriteCond %{REQUEST_URI} !^/xml [NC]
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME}/index.html !-f
+	RewriteCond %{REQUEST_FILENAME}/index.php !-f
+	RewriteRule ^(.*)$ index.php/$1 [L]
+
+
+
+	##############################################################################
+	# FINAL CHECK IF NONE OF THE ABOVE MATCH REWRITE DRUPAL PATH
+	##############################################################################
+	# Rewrite URLs of the form 'x' to the form 'index.php?q=x'  for default site.
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_URI} !=/favicon.ico
+	RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
 
 </IfModule>
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-#                                                                                        #
-#                   N.B. Sometimes, Amazon cPanel adds rules to our .htaccess            #
-#                   If that happens, they will be below these lines                      #
-#                                                                                        #
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
